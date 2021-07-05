@@ -1,40 +1,12 @@
-# java-getting-started
+Group 16's project for CMPT 276 Summer 2021
 
-A barebones Java app, which can easily be deployed to Heroku.
+Proposal Document:
 
-This application supports the [Getting Started with Java on Heroku](https://devcenter.heroku.com/articles/getting-started-with-java) article - check it out.
+Project Name: ReadME
+06/25/2021,
 
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+ReadME is an E-commerce unfamous author incubator that allows unfamous authors to start risk-free and allows students to trade their secondhand textbooks without the effort of self-advertising in any messenger/discord group chats. By signing up and login to ReadME would gain user access to all features: printing, posting, selling, buying, review, loyalty points and more. Price is never fixed for any books selling on ReadME, buyers may (and would be welcomed to) negotiate price with the seller. Speaking about API, if the book is delivered through postal services, a shipping fee estimation would be included based on the calculation of distance too, which would be using the open API Google Maps. As for the competitors we have nowadays, we have the strengths of all-in-one bookstore. And to give the hidden gems a chance to shine, we would not sell the “best-sellers”. To make this website perfect, with all the features we desire, the work would be enough for five group members. Sample story: An SFU student finishes their Calculus 1 course just to be stuck with a now useless textbook. Rather than throw it away or try to advertise it yourself, turn a profit using ReadME, save the prospective buyer money with below retail pricing, get some money back, then use the points you acquired for a new textbook or another product of your choosing!
 
-## Running Locally
+Some quick answers to questions regarding the Project: How is this problem solved currently (if at all)? Amazon (Kindle), Discord(second-hand textbook selling channel), Archive of Our Own(for easy publishing), stockX(bidding). How will this project make life better? Is it educational or just for entertainment? It will make purchases easier and selling too. It is a convenience for students who will have an organized and dedicated space for selling their used textbooks. It is also a reprieve for small authors to sell their books without competition from large authors and publishers. Who is the target audience? Who will use your app? Small authors and individuals/students (for selling), and people who don’t want to buy books/textbooks at retail price.
 
-Make sure you have Java and Maven installed.  Also, install the [Heroku CLI](https://cli.heroku.com/).
-
-```sh
-$ git clone https://github.com/heroku/java-getting-started.git
-$ cd java-getting-started
-$ mvn install
-$ heroku local:start
-```
-
-Your app should now be running on [localhost:5000](http://localhost:5000/).
-
-If you're going to use a database, ensure you have a local `.env` file that reads something like this:
-
-```
-JDBC_DATABASE_URL=jdbc:postgresql://localhost:5432/java_database_name
-```
-
-## Deploying to Heroku
-
-```sh
-$ heroku create
-$ git push heroku main
-$ heroku open
-```
-
-## Documentation
-
-For more information about using Java on Heroku, see these Dev Center articles:
-
-- [Java on Heroku](https://devcenter.heroku.com/categories/java)
+Does this project have many individual features, or one main feature (possibility with many subproblems)? These are the ‘epics’ of your project. It has a lot of sub-features working towards one purpose -- selling or buying.
