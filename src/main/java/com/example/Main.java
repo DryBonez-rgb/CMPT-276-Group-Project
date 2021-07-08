@@ -74,6 +74,16 @@ public class Main {
     }
   }
 
+  @RequestMapping("/login")
+  String login() {
+    return "login";
+  }
+
+  @RequestMapping("/signup")
+  String signup() {
+    return "signup";
+  }
+
   @Bean
   public DataSource dataSource() throws SQLException {
     if (dbUrl == null || dbUrl.isEmpty()) {
