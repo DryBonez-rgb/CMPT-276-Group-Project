@@ -124,7 +124,7 @@ public class Main {
         if(CurrentUser.getType() == "Normal")
         {
           model.put("user", CurrentUser);
-          return "home";
+          return "index";
         }
 
         if(CurrentUser.getType() == "Author")
