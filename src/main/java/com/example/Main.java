@@ -111,11 +111,9 @@ public class Main {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
       ResultSet rs = stmt.executeQuery("SELECT * FROM accounts WHERE password="+(user.getPassword()));
-      ResultSet ns = stmt.executeQuery("SELECT * FROM accounts WHERE name="+(user.getName()));
+  
       rs.next();
-      ns.next();
-      if(rs.getString("id") == ns.getString("id")) // make sure the username and the password are for the same account id
-      {
+      
 
         Account CurrentUser = new Account();
         CurrentUser.setName(rs.getString("name"));
@@ -149,10 +147,6 @@ public class Main {
         }
       
         return "error"; // Shouldn't get here under normal circumstances.
-      }
-        else {
-        return "error"; // Shouldn't get here under normal circumstances.
-        }
     
       }
       catch (Exception e) {
