@@ -108,7 +108,7 @@ public class Main {
     consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
   )
   public String handleBrowserAccountLogin(Map<String, Object> model, Account user) throws Exception {
-    String pw = user.getPassword()
+    String pw = user.getPassword();
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
       ResultSet rs = stmt.executeQuery("SELECT * FROM accounts WHERE password="+(pw));
