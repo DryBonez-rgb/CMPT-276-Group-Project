@@ -55,6 +55,50 @@ public class Main {
   String index() {
     return "index";
   }
+ // ==============================
+ // SIGN UP
+ // ==============================
+  
+  
+
+  @GetMapping(
+    path = "/signup"
+  )
+  public String getSignUpForm(Map<String, Object> model) {
+    Account account = new Account();
+    model.put("account", account);
+    return "signup";
+  }
+
+  // Save the account data into the database
+  @PostMapping(
+    path = "/signup",
+    consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
+  )
+  public String handleBrowserPersonSubmit(Map<String, Object> model, Account account) throws Exception {
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS accounts (name varchar(20), password varchar(20), type varchar(6), premium bool, id serial)");
+      String sql = "INSERT INTO accounts (name,password,type,premium) VALUES ('" + account.getName() + "','" + account.getPassword()  + "','"  + account.getType() + "','" + account.getPremium() + "')";
+      stmt.executeUpdate(sql);
+      System.out.println(account.getName() + " " + account.getPassword());
+      return "redirect:/signup/success";
+    }
+    catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
+  }
+
+
+//================================
+// LOGIN
+//================================
+
+  @RequestMapping("/login")
+  String login() {
+    return "login";
+  }
 
   @PostMapping (
     path = "/login",
@@ -128,15 +172,6 @@ public class Main {
     }
   }
 
-  @RequestMapping("/login")
-  String login() {
-    return "login";
-  }
-
-  @RequestMapping("/signup")
-  String signup() {
-    return "signup";
-  }
 
   @Bean
   public DataSource dataSource() throws SQLException {
