@@ -26,6 +26,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.MediaType;
+
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -52,6 +55,57 @@ public class Main {
   String index() {
     return "index";
   }
+
+  @PostMapping (
+    path = "/login",
+    consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
+  )
+  public String handleBrowserAccountLogin(Map<String, Object> model, Account user) throws Exception {
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM accounts WHERE password="+(user.getPassword()));
+      rs.next();
+
+      Account CurrentUser = new Account();
+      CurrentUser.setName(rs.getString("name"));
+      CurrentUser.setID(rs.getString("id"));
+      CurrentUser.setPassword(rs.getString("password"));
+      CurrentUser.setType(rs.getString("type"));
+      CurrentUser.setPremium(rs.getBoolean("premium"));
+      
+      if(CurrentUser.getType() == "Normal")
+      {
+        model.put("user", CurrentUser);
+        return "home";
+      }
+
+      if(CurrentUser.getType() == "Author")
+      {
+        model.put("user", CurrentUser);
+        return "author";
+      }
+
+      if(CurrentUser.getType() == "Publisher")
+      {
+        model.put("user", CurrentUser);
+        return "publisher";
+      }
+
+      if(CurrentUser.getType() == "Admin")
+      {
+        model.put("user", CurrentUser);
+        return "admin";
+      }
+      
+      return "error"; // Shouldn't get here under normal circumstances.
+    }
+      catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
+
+  }
+  
 
   @RequestMapping("/db")
   String db(Map<String, Object> model) {

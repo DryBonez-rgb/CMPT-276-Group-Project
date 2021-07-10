@@ -55,7 +55,7 @@
     <div class="container">
       <a href="/"><img src="/ReadME-logo-alt.png" class="logo_medium"></a>
       <h1 class="font-weight-bold" style="text-align: center;margin-top:0;margin-bottom: 30px;">Welcome to ReadME!</h1>
-      <form>
+      <form action="#" method="post" th:action="@{/login}" th:object="${account}">
         <div class="mb-3">
           <input type="text" class="form-control" id="usernameInput" maxlength="20" placeholder="Username" onkeyup="restrictUsernameChar(this)">
         </div>
