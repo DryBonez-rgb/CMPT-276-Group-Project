@@ -123,32 +123,11 @@ public class Main {
       CurrentUser.setPassword(rs.getString("password"));
       CurrentUser.setType(rs.getString("type"));
       CurrentUser.setPremium(rs.getBoolean("premium"));
+
+      //For testing purposes
+      model.put("user", CurrentUser);
+      return "index";
       
-      if(CurrentUser.getType() == "Normal")
-      {
-        model.put("user", CurrentUser);
-        return "index";
-      }
-
-      if(CurrentUser.getType() == "Author")
-      {
-        model.put("user", CurrentUser);
-        return "author";
-      }
-
-      if(CurrentUser.getType() == "Publisher")
-      {
-        model.put("user", CurrentUser);
-        return "publisher";
-      }
-
-      if(CurrentUser.getType() == "Admin")
-      {
-        model.put("user", CurrentUser);
-        return "admin";
-      }
-      
-      return "error"; // Shouldn't get here under normal circumstances.
     
     }
     catch (Exception e) {
