@@ -56,10 +56,10 @@
       <h1 class="font-weight-bold" style="text-align: center;margin-top:0;margin-bottom: 30px;">Welcome to ReadME!</h1>
       <form action="#" method="post" th:action="@{/login}" th:object="${account}">
         <div class="mb-3">
-          <input type="text" class="form-control" id="usernameInput" maxlength="20" placeholder="Username" onkeyup="restrictUsernameChar(this)">
+          <input type="text" th:field=*{name} class="form-control" id="usernameInput" maxlength="20" placeholder="Username" onkeyup="restrictUsernameChar(this)">
         </div>
         <div class="mb-3">
-          <input type="password" class="form-control" id="passwordInput" maxlength="20" placeholder="Password">
+          <input type="password" th:field=*{password} class="form-control" id="passwordInput" maxlength="20" placeholder="Password">
         </div>
         <button type="submit" class="btn btn-primary" style="background-color: #93AA6F;width:100%;border-color: #93AA6F;">Log in</button>
       </form>

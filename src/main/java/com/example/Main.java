@@ -98,8 +98,12 @@ public class Main {
 // LOGIN
 //================================
 
-  @RequestMapping("/login")
-  String login() {
+  @GetMapping(
+    path = "/login"
+  )
+  public String getLoginForm(Map<String, Object> model) {
+    Account account = new Account();
+    model.put("account", account);
     return "login";
   }
 
@@ -108,10 +112,10 @@ public class Main {
     consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
   )
   public String handleBrowserAccountLogin(Map<String, Object> model, Account user) throws Exception {
-    String pw = user.getPassword();
+   
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
-      ResultSet rs = stmt.executeQuery("SELECT * FROM accounts WHERE password = "+ pw);
+      ResultSet rs = stmt.executeQuery("SELECT * FROM accounts WHERE id = 1");
       rs.next();
     
       Account CurrentUser = new Account();
@@ -121,32 +125,24 @@ public class Main {
       CurrentUser.setType(rs.getString("type"));
       CurrentUser.setPremium(rs.getBoolean("premium"));
       
-      if(CurrentUser.getType() == "Normal")
+      System.out.println(CurrentUser.getName() + " " + CurrentUser.getPassword() + " " + CurrentUser.getID() + " " + CurrentUser.getType());
+      
+      String type = CurrentUser.getType();
+
+      if(type.equals("Normal"))
       {
         model.put("user", CurrentUser);
-        return "index";
+        return "redirect:/";
       }
 
-      if(CurrentUser.getType() == "Author")
+      else if(type.equals("Author"))
       {
         model.put("user", CurrentUser);
-        return "author";
-      }
-
-      if(CurrentUser.getType() == "Publisher")
-      {
-        model.put("user", CurrentUser);
-        return "publisher";
-      }
-
-      if(CurrentUser.getType() == "Admin")
-      {
-        model.put("user", CurrentUser);
-        return "admin";
+        return "redirect:/author";
       }
       
-      return "error"; // Shouldn't get here under normal circumstances.
-    
+      return "redirect:/";
+      
     }
     catch (Exception e) {
     model.put("message", e.getMessage());
