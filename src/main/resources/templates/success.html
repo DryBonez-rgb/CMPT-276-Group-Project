@@ -10,19 +10,24 @@
         background-color: #93AA6F;
         height: 100%;
       }
-      div.container{
-        position: absolute;
+      .container{
+        position: fixed;
         background-color: #FFFFFF;
-        width: 80%;
-        margin: auto;
+        width: 80vw;
+        right: 0;
+        margin-bottom: 50px;
         height:100%;
-        padding:50px;
       }
     </style>
   </head>
   <body>
     <div class="container">
       <h1>Your account was successfuly created, <a href="/">click here to continue</a></h1>
+      <h1>Test Database Output</h1>
+        <ul th:each="record : ${records}">
+            <li th:text="${record}"/>
+        </ul>
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   </body>

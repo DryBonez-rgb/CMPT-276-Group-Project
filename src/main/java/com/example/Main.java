@@ -59,10 +59,32 @@ public class Main {
  // SIGN UP
  // ==============================
   
- @RequestMapping("/success")
- String success() {
-   return "success";
- }
+//  @RequestMapping("/success")
+//  String success() {
+//    return "success";
+//  }
+// for testing purpose
+ @GetMapping("/success")
+  public String getPersonSuccess(Map<String, Object> model){
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM accounts");
+
+      ArrayList<String> output = new ArrayList<String>();
+      while (rs.next()) {
+        String username = rs.getString("name");
+        String id = rs.getString("id");
+        
+        output.add(id + ":" + name);
+      }
+
+      model.put("records", output);
+      return "success";
+    } catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
+  }
 
   @GetMapping(
     path = "/signup"
