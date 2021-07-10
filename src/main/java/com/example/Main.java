@@ -59,32 +59,10 @@ public class Main {
  // SIGN UP
  // ==============================
   
-//  @RequestMapping("/success")
-//  String success() {
-//    return "success";
-//  }
-// for testing purpose
- @GetMapping("/success")
-  public String getPersonSuccess(Map<String, Object> model){
-    try (Connection connection = dataSource.getConnection()) {
-      Statement stmt = connection.createStatement();
-      ResultSet rs = stmt.executeQuery("SELECT * FROM accounts");
-
-      ArrayList<String> output = new ArrayList<String>();
-      while (rs.next()) {
-        String username = rs.getString("name");
-        String id = rs.getString("id");
-        
-        output.add(id + ":" + name);
-      }
-
-      model.put("records", output);
-      return "success";
-    } catch (Exception e) {
-      model.put("message", e.getMessage());
-      return "error";
-    }
-  }
+ @RequestMapping("/success")
+ String success() {
+   return "success";
+ }
 
   @GetMapping(
     path = "/signup"
@@ -132,11 +110,8 @@ public class Main {
   public String handleBrowserAccountLogin(Map<String, Object> model, Account user) throws Exception {
     String pw = user.getPassword();
     try (Connection connection = dataSource.getConnection()) {
-
       Statement stmt = connection.createStatement();
-
-      ResultSet rs = stmt.executeQuery("SELECT * FROM accounts");
-
+      ResultSet rs = stmt.executeQuery("SELECT * FROM accounts WHERE password = "+ pw);
       rs.next();
     
       Account CurrentUser = new Account();
@@ -145,11 +120,32 @@ public class Main {
       CurrentUser.setPassword(rs.getString("password"));
       CurrentUser.setType(rs.getString("type"));
       CurrentUser.setPremium(rs.getBoolean("premium"));
-
-      //For testing purposes
-      model.put("user", CurrentUser);
-      return "index";
       
+      if(CurrentUser.getType() == "Normal")
+      {
+        model.put("user", CurrentUser);
+        return "index";
+      }
+
+      if(CurrentUser.getType() == "Author")
+      {
+        model.put("user", CurrentUser);
+        return "author";
+      }
+
+      if(CurrentUser.getType() == "Publisher")
+      {
+        model.put("user", CurrentUser);
+        return "publisher";
+      }
+
+      if(CurrentUser.getType() == "Admin")
+      {
+        model.put("user", CurrentUser);
+        return "admin";
+      }
+      
+      return "error"; // Shouldn't get here under normal circumstances.
     
     }
     catch (Exception e) {
