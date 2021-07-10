@@ -110,8 +110,11 @@ public class Main {
   public String handleBrowserAccountLogin(Map<String, Object> model, Account user) throws Exception {
     String pw = user.getPassword();
     try (Connection connection = dataSource.getConnection()) {
+
       Statement stmt = connection.createStatement();
-      ResultSet rs = stmt.executeQuery("SELECT * FROM accounts WHERE id = 1");
+
+      ResultSet rs = stmt.executeQuery("SELECT * FROM accounts");
+
       rs.next();
     
       Account CurrentUser = new Account();
