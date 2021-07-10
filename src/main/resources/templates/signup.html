@@ -3,16 +3,105 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap` CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>ReadME Sign up</title>
+    <style>
+      html, body{
+        background-color: #93AA6F;
+        height: 100%;
+      }
+      div.container{
+        position: absolute;
+        background-color: #FFFFFF;
+        width: 80%;
+        margin: auto;
+        height:auto;
+        padding:50px;
+      }
+      .logo_medium{
+        display: block;
+        width: 200px;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      form{
+        width:50%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .user-input{
+        width:100%;
+        margin-bottom:20px;
+      }
+    </style>
 
-    <title>ReadME signup</title>
+    <script type="text/javascript">
+      function restrictInputChar(input){
+        var regex = /[^a-zA-Z0-9_]/gi;
+        input.value = input.value.replace(regex,'');
+      }
+      function checkExistingAccounts(usernameInput){
+
+      }
+    </script>
   </head>
   <body>
     <div class="container">
       <a href="/"><img src="/ReadME-logo-alt.png" class="logo_medium"></a>
-      <h1 class="font-weight-bold" style="text-align: center;margin-top:0;margin-bottom: 30px;">Nothing here yet</h1>
+      <h1 class="font-weight-bold" style="text-align: center;margin-top:0;margin-bottom: 30px;">Welcome to ReadME!</h1>
+      <form action="#" method="post" th:action="@{/signup}" th:object="${account}">
+        <div class="mb-3">
+          <label>Username:</label>
+          <input type="text" th:field=*{name} class="form-control user-input" id="usernameInput" maxlength="20" onkeyup="restrictInputChar(this)" required>
+        </div>
+        <div class="mb-3">
+          <label>Password:</label>
+          <input type="password" th:field=*{password} class="form-control " id="passwordInput" maxlength="20"onkeyup="restrictInputChar(this)" required>
+          <div>
+            <label class="user-input" style="color:#bababa">Your password must contain alphabets and numbers only</label>
+          </div>
+        </div>
+        <div>
+          <select id="choices" class = "form-select user-input" th:field=*{type} onchange="showPremium(this);" required>
+            <option value="Default" selected disabled hidden>Choose account type</option>
+            <option value="Normal" id="user">User</option>
+            <option value="Author" id="author">Author</option>
+          </select>
+          
+        </div>
+        <div id="PremiumMenu" style="display:none;">
+          <select id="premium" class = "form-select user-input" th:field=*{premium}>
+            <option value=FALSE id="standard">Standard</option>
+            <option value=TRUE id="premium">Premium</option>
+          </select>
+        </div>
+        <script>
+          function showPremium(typeSelect) {
+            console.log(typeSelect);
+            if(typeSelect)
+            {
+              typeval = document.getElementById("user").value;
+              if(typeval == typeSelect.value)
+              {
+                document.getElementById("PremiumMenu").style.display = "block";
+              }
+              else
+              {
+                document.getElementById("PremiumMenu").style.display = "none";
+              }
+            }
+            else
+            {
+              document.getElementById("PremiumMenu").style.display = "none";
+            }
+          }
+
+        </script>
+        <button type="submit" class="btn btn-primary user-input" style="background-color: #93AA6F;width:100%;border-color: #93AA6F;">Create account</button>
+      </form>
+      <p style="position: absolute;bottom: 15px;text-align: center; width: 100%; color: rgb(136, 136, 136);">Already a member? <a href="/login">Sign in</a></p>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   </body>

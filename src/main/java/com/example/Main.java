@@ -181,6 +181,10 @@ public class Main {
   }
 
 
+  @RequestMapping("/author")
+  String author() {
+    return "author";
+  }
   @Bean
   public DataSource dataSource() throws SQLException {
     if (dbUrl == null || dbUrl.isEmpty()) {
