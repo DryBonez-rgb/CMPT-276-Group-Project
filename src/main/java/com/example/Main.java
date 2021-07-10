@@ -59,7 +59,10 @@ public class Main {
  // SIGN UP
  // ==============================
   
-  
+ @RequestMapping("/success")
+ String success() {
+   return "success";
+ }
 
   @GetMapping(
     path = "/signup"
