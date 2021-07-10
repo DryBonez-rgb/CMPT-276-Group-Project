@@ -81,7 +81,7 @@ public class Main {
   public String handleBrowserPersonSubmit(Map<String, Object> model, Account account) throws Exception {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
-      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS accounts (name varchar(20), password varchar(20), type varchar(20), premium bool, id serial)");
+      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS accounts (id serial, name varchar(20), password varchar(20), type varchar(20), premium bool)");
       String sql = "INSERT INTO accounts (name,password,type,premium) VALUES ('" + account.getName() + "','" + account.getPassword()  + "','"  + account.getType() + "','" + account.getPremium() + "')";
       stmt.executeUpdate(sql);
       System.out.println(account.getName() + " " + account.getPassword());
