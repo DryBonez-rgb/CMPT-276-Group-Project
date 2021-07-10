@@ -111,47 +111,46 @@ public class Main {
     String pw = user.getPassword();
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
-      ResultSet rs = stmt.executeQuery("SELECT * FROM accounts WHERE password="+(pw));
+      ResultSet rs = stmt.executeQuery("SELECT * FROM accounts WHERE password = "+ pw);
       rs.next();
-      
-
-        Account CurrentUser = new Account();
-        CurrentUser.setName(rs.getString("name"));
-        CurrentUser.setID(rs.getString("id"));
-        CurrentUser.setPassword(rs.getString("password"));
-        CurrentUser.setType(rs.getString("type"));
-        CurrentUser.setPremium(rs.getBoolean("premium"));
-      
-        if(CurrentUser.getType() == "Normal")
-        {
-          model.put("user", CurrentUser);
-          return "index";
-        }
-
-        if(CurrentUser.getType() == "Author")
-        {
-          model.put("user", CurrentUser);
-          return "author";
-        }
-
-        if(CurrentUser.getType() == "Publisher")
-        {
-          model.put("user", CurrentUser);
-         return "publisher";
-        }
-
-        if(CurrentUser.getType() == "Admin")
-        {
-          model.put("user", CurrentUser);
-          return "admin";
-        }
-      
-        return "error"; // Shouldn't get here under normal circumstances.
     
+      Account CurrentUser = new Account();
+      CurrentUser.setName(rs.getString("name"));
+      CurrentUser.setID(rs.getString("id"));
+      CurrentUser.setPassword(rs.getString("password"));
+      CurrentUser.setType(rs.getString("type"));
+      CurrentUser.setPremium(rs.getBoolean("premium"));
+      
+      if(CurrentUser.getType() == "Normal")
+      {
+        model.put("user", CurrentUser);
+        return "index";
       }
-      catch (Exception e) {
-      model.put("message", e.getMessage());
-      return "error";
+
+      if(CurrentUser.getType() == "Author")
+      {
+        model.put("user", CurrentUser);
+        return "author";
+      }
+
+      if(CurrentUser.getType() == "Publisher")
+      {
+        model.put("user", CurrentUser);
+        return "publisher";
+      }
+
+      if(CurrentUser.getType() == "Admin")
+      {
+        model.put("user", CurrentUser);
+        return "admin";
+      }
+      
+      return "error"; // Shouldn't get here under normal circumstances.
+    
+    }
+    catch (Exception e) {
+    model.put("message", e.getMessage());
+    return "error";
     }
   }
   
