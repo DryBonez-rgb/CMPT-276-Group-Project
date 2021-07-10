@@ -75,7 +75,7 @@ public class Main {
         String username = rs.getString("name");
         String id = rs.getString("id");
         
-        output.add(id + ":" + fname);
+        output.add(id + ":" + name);
       }
 
       model.put("records", output);
