@@ -82,7 +82,7 @@ public class Main {
       String sql = "INSERT INTO accounts (name,password,type,premium) VALUES ('" + account.getName() + "','" + account.getPassword()  + "','"  + account.getType() + "','" + account.getPremium() + "')";
       stmt.executeUpdate(sql);
       System.out.println(account.getName() + " " + account.getPassword());
-      return "redirect:/signup/success";
+      return "redirect:/success";
     }
     catch (Exception e) {
       model.put("message", e.getMessage());
