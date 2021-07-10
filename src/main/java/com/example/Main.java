@@ -147,13 +147,14 @@ public class Main {
       
         return "error"; // Shouldn't get here under normal circumstances.
       }
-        catch (Exception e) {
-        model.put("message", e.getMessage());
-       return "error";
+        else {
+        return "error"; // Shouldn't get here under normal circumstances.
+        }
+    
       }
-    }
-    else {
-      return "error"; // Shouldn't get here under normal circumstances.
+      catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
     }
   }
   
