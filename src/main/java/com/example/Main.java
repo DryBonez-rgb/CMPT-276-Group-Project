@@ -111,7 +111,7 @@ public class Main {
     String pw = user.getPassword();
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
-      ResultSet rs = stmt.executeQuery("SELECT * FROM accounts WHERE password = "+ pw);
+      ResultSet rs = stmt.executeQuery("SELECT * FROM accounts WHERE id = 1");
       rs.next();
     
       Account CurrentUser = new Account();
