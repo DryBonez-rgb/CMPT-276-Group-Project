@@ -3,7 +3,7 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * You may obtain a copy of the License at  
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -94,6 +94,11 @@ public class Main {
   }
 
 
+@RequestMapping("/invalid")
+ String invalid() {
+   return "invalid";
+ }
+
 //================================
 // LOGIN
 //================================
@@ -116,8 +121,19 @@ public class Main {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
       ResultSet rs = stmt.executeQuery("SELECT * FROM accounts WHERE name='" +user.getName() + "'");
-      rs.next();
-    
+      
+      if(rs.next() == false) // checks for invalid username.
+      {
+        return "redirect:/invalid";
+      }
+
+      String passcheck = user.getPassword();
+
+      if(passcheck.equals(rs.getString("password"))) // check for valid password
+      {
+  
+      
+
       Account CurrentUser = new Account();
       CurrentUser.setName(rs.getString("name"));
       CurrentUser.setID(rs.getString("id"));
@@ -144,6 +160,12 @@ public class Main {
       return "redirect:/";
       
     }
+
+      else {
+        return "redirect:/invalid"; // If password check fails.
+      }
+    }
+
     catch (Exception e) {
     model.put("message", e.getMessage());
     return "error";
