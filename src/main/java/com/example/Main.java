@@ -115,7 +115,7 @@ public class Main {
    
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
-      ResultSet rs = stmt.executeQuery("SELECT * FROM accounts WHERE id = 1");
+      ResultSet rs = stmt.executeQuery("SELECT * FROM accounts WHERE name='" +user.getName() + "'");
       rs.next();
     
       Account CurrentUser = new Account();
