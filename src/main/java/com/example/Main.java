@@ -120,7 +120,7 @@ public class Main {
    
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
-      ResultSet rs = stmt.executeQuery("SELECT * FROM accounts WHERE name='" +user.getName() + "'");
+      ResultSet rs = stmt.executeQuery("SELECT * FROM accounts WHERE name='" + user.getName() + "'");
       
       if(rs.next() == false) // checks for invalid username.
       {
@@ -178,7 +178,39 @@ public class Main {
     return "error";
     }
   }
+
+//================================
+// ORDER DATABASE
+//================================
   
+@GetMapping(
+  path = "/order"
+)
+public String get(Map<String, Object> model) {
+  Order order = new Order();
+  model.put("order", order);
+  return "ordersuccess";
+}
+
+// Save the order data into the database
+@PostMapping(
+  path = "/order",
+  consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
+)
+public String handleBrowserOrderSubmit(Map<String, Object> model, Order order) throws Exception {
+  try (Connection connection = dataSource.getConnection()) {
+    Statement stmt = connection.createStatement();
+    stmt.executeUpdate("CREATE TABLE IF NOT EXISTS accounts (id serial, productID varchar(20), sellerID varchar(20), buyerID varchar(20))");
+    String sql = "INSERT INTO accounts (name,password,type,premium) VALUES ('" + order.getID() + "','" + order.getProductID()  + "','"  + order.getSellerID() + "','" + order.getBuyerID() + "')";
+    stmt.executeUpdate(sql);
+    System.out.println(order.getID() + " " + order.getProductID() + " " + order.getSellerID() + " " + order.getBuyerID());
+    return "redirect:/ordersuccess";
+  }
+  catch (Exception e) {
+    model.put("message", e.getMessage());
+    return "error";
+  }
+}
 
   @RequestMapping("/db")
   String db(Map<String, Object> model) {
