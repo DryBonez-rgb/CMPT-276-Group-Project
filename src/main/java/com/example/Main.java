@@ -218,7 +218,7 @@ public String handleBrowserOrderSubmit(Map<String, Object> model, Order order) t
 //================================
 
 @GetMapping(
-  path = "/test"
+  path = "/upload"
 )
 public String getProductForm(Map<String, Object> model) {
   Product product = new Product();
@@ -227,15 +227,15 @@ public String getProductForm(Map<String, Object> model) {
 }
 
 @PostMapping (
-  path = "/test",
+  path = "/upload",
   consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
 )
 
 public String handleBrowserProductSubmit(Map<String, Object> model, Product product) throws Exception {
   try (Connection connection = dataSource.getConnection()) {
     Statement stmt = connection.createStatement();
-    stmt.executeUpdate("CREATE TABLE IF NOT EXISTS products (product-id serial, seller-id varchar(20), book-title varchar(80), img-path varchar(50), status bool, price varchar(10), author varchar(80), subject varchar(40), description varchar(400), address01 varchar(200), address02 varchar(100), city varchar(20), province varchar(40), postal-code varchar(10) )");
-    String sql = "INSERT INTO products () VALUES ('" + product.getProductID() + "','" + product.getSellerID() + "','" + product.getTitle() + "','" + product.getImage() + "','" +  product.getStatus() + "','" +  product.getAuthor() + "','" +  product.getSubject() + "','" +  product.getDescription() + "','" +  product.getAddress01() + "','" +  product.getAddress02() + "','" +  product.getCity() + "','" +  product.getProvince() + "','" +  product.getPostal() + "','" +  "')";
+    stmt.executeUpdate("CREATE TABLE IF NOT EXISTS products (productId serial, sellerId varchar(20), title varchar(80), image varchar(50), status bool, price varchar(10), author varchar(80), subject varchar(40), description varchar(400), address01 varchar(200), address02 varchar(100), city varchar(20), province varchar(40), postal varchar(10))");
+    String sql = "INSERT INTO products (title, status, price, author, subject, description, address01, city, province, postal) VALUES ('"+ product.getTitle() +"','"+ "TRUE"+ "','"+ product.getPrice()+ "','" + product.getAuthor() + "','"+ product.getSubject() +"','"+ product.getDescription() + "','" + product.getAddress01()+ "','" + product.getCity()+ "','" + product.getProvince()+ "','" + product.getPostal()+"')";
     stmt.executeUpdate(sql);
     // System.out.println(account.getName() + " " + account.getPassword());
     return "redirect:/success";
