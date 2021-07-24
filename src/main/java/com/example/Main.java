@@ -156,6 +156,13 @@ public class Main {
         model.put("user", CurrentUser);
         return "redirect:/author";
       }
+
+      else if(type.equals("Admin"))
+      {
+        model.put("user", CurrentUser);
+        return "redirect:/admin";
+      }
+
       
       return "redirect:/";
       
