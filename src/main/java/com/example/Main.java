@@ -204,10 +204,16 @@ public class Main {
 @GetMapping(
   path = "/order"
 )
-public String get(Map<String, Object> model) {
-  Order order = new Order();
-  model.put("order", order);
-  return "ordersuccess";
+public String getOrderForm(Map<String, Object> model, HttpServletRequest request) {
+  HttpSession session = request.getSession(false);
+  if(session == null) { // If not logged in
+      return "redirect:/invalid";
+    }
+  else {
+    Order order = new Order();
+    model.put("order", order);
+    return "ordersuccess";
+  }
 }
 
 // Save the order data into the database
@@ -215,13 +221,14 @@ public String get(Map<String, Object> model) {
   path = "/order",
   consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
 )
-public String handleBrowserOrderSubmit(Map<String, Object> model, Order order) throws Exception {
+public String handleBrowserOrderSubmit(Map<String, Object> model, Order order, HttpServletRequest request) throws Exception {
   try (Connection connection = dataSource.getConnection()) {
     Statement stmt = connection.createStatement();
-    stmt.executeUpdate("CREATE TABLE IF NOT EXISTS accounts (id serial, productID varchar(20), sellerID varchar(20), buyerID varchar(20))");
-    String sql = "INSERT INTO accounts (name,password,type,premium) VALUES ('" + order.getID() + "','" + order.getProductID()  + "','"  + order.getSellerID() + "','" + order.getBuyerID() + "')";
+    HttpSession session = request.getSession();
+    stmt.executeUpdate("CREATE TABLE IF NOT EXISTS orders (id serial, productID varchar(20), sellerID varchar(20), buyerID varchar(20))");
+    String sql = "INSERT INTO orders (productID,sellerID,buyerID) VALUES ('" + order.getProductID()  + "','"  + order.getSellerID() + "','" + session.getAttribute("ID") + "')"; 
     stmt.executeUpdate(sql);
-    System.out.println(order.getID() + " " + order.getProductID() + " " + order.getSellerID() + " " + order.getBuyerID());
+    System.out.println(order.getProductID() + " " + order.getSellerID() + " " + session.getAttribute("ID"));
     return "redirect:/ordersuccess";
   }
   catch (Exception e) {
@@ -330,7 +337,7 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
   }
 
   //=============================================
-  // ACCESS
+  // ACCESS DENIAL REDIRECTION
   //=============================================
   @RequestMapping("/access")
   String access() {
