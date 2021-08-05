@@ -181,8 +181,9 @@ public class Main {
       }
 
       
-      return "redirect:/";
-      
+      else {
+        return "redirect:/";
+      }
     }
 
       else {
@@ -302,7 +303,7 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
     else {
       String type = (String)session.getAttribute("Type");
       if(type.equals("Author")) { // Admins can access everything
-        return "redirect:/author";
+        return "author";
       }
       else {
         return "redirect:/access";
@@ -320,7 +321,7 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
     else {
       String type = (String)session.getAttribute("Type");
       if(type.equals("Admin")) {
-        return "redirect:/admin";
+        return "admin";
       }
       else {
         return "redirect:/access";
@@ -397,6 +398,18 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
         return "redirect:/";
       }
   }
+
+  //===========================================================
+  // LOG-OUT
+  //===========================================================
+  @RequestMapping("/logout")
+    public String logout(HttpServletRequest request) {
+    HttpSession session = request.getSession(false);
+    if (session != null) {
+        session.invalidate();
+    }
+    return "redirect:/";  //Where you go after logout.
+}
 
   @Bean
   public DataSource dataSource() throws SQLException {
