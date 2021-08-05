@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="/stylesheets/css/product.css">
     <title>ReadME upload product</title>
 
-    <!-- <script type="text/javascript" src="/stylesheets/js/inputField.assert.js"> -->
-    </script>
+    <script src="/stylesheets/js/auto.complete.js"></script>
 
   </head>
   <body>
@@ -141,62 +140,82 @@
           <hr>
           <p>Please <b>DO NOT</b> share your personal information<br>This website is built for study purpose only</p>
         </div>
-        <div class="form-group form-input col-md-6" id="book-address1">
-          <label for="productAddressLine1" class="form-label">Address line 1</label>
-          <input type="text" field="*{address01}" name="address01" class="form-control" maxlength="200" id="productAddressLine1" required>
-          <small>Street address, P.O. box, company name, c/o</small>
-          <div class="invalid-feedback">
-            Please enter a valid address.
-          </div>
+
+        <div class="form-group form-input col-md-6">
+          <label for="book-address-01" class="form-label full-field">Address Line 1</label>
+            <input
+              type="text"
+              field="*{address01}"
+              name="address01"
+              class="form-control"
+              maxlength="200"
+              id="book-address-01"
+              autocomplete="off"
+              required/>
+            <small>Street address, P.O. box, company name, c/o</small>
+            <div class="invalid-feedback">
+              Please enter a valid address.
+            </div>
         </div>
 
-        <div class="form-group form-input col-md-6" id="book-address2">
-          <label for="productAddressLine1" class="form-label">Address line 2</label>
-          <input type="text" field="*{address02}" name="address02" class="form-control" maxlength="100" id="productAddressLine1">
-          <small>Apartment, suite, unit, building, floor, etc</small>
+        <div class="form-group form-input col-md-6">
+          <label for="book-address-02" class="form-label full-field">Address Line 2</label>
+            <input
+              type="text"
+              field="*{address02}"
+              name="address02"
+              class="form-control"
+              maxlength="100"
+              id="book-address-02"
+              autocomplete="off"
+              />
+            <small>Apartment, suite, unit, building, floor, etc</small>
         </div>
 
-        <div class="form-group form-input col-md-4" id="book-address3">
-          <label for="productCity" class="form-label">City</label>
-          <input type="text" field="*{city}" name="city" class="form-control" maxlength="20" id="productCity" required>
-          <div class="invalid-feedback">
-            Please enter a valid address.
-          </div>
+        <div class="form-group form-input col-md-4">
+          <label for="book-city" class="form-label full-field">City</label>
+            <input
+              type="text"
+              field="*{city}"
+              name="city"
+              class="form-control"
+              maxlength="20"
+              id="book-city"
+              autocomplete="off"
+              required/>
         </div>
 
-        <div class="form-group form-input col-md-4" id="book-address4">
-          <label for="productAddressProvince" class="form-label">Province</label>
-          <select field="*{province}" name="province" class="form-select" id="productAddressProvince" required>
-            <option selected hidden value="">Province...</option>
-            <option>Alberta</option>
-            <option>British Columbia</option>
-            <option>Manitoba</option>
-            <option>New Brunswick</option>
-            <option>Newfoundland and Labrador</option>
-            <option>Northwest Territories</option>
-            <option>Nova Scotia</option>
-            <option>Nunavut</option>
-            <option>Ontario</option>
-            <option>Prince Edward Island</option>
-            <option>Quebec</option>
-            <option>Saskatchewan</option>
-            <option>Yukon</option>
-
-          </select>
-          <div class="invalid-feedback">
-            Please enter a valid address.
-          </div>
+        <div class="form-group form-input col-md-4">
+          <label for="book-province" class="form-label full-field">Province</label>
+            <input
+              type="text"
+              field="*{province}"
+              name="province"
+              class="form-control"
+              maxlength="20"
+              id="book-province"
+              autocomplete="off"
+              required/>
         </div>
 
-        <div class="form-group form-input col-md-4" id="book-address5">
-          <label for="productCity" class="form-label">Postal Code</label>
-          <input type="text" field="*{postal}" name="postal" class="form-control" id="productPostalCode" maxlength="6" required>
-          <div class="invalid-feedback">
-            Please enter a valid address.
-          </div>
+        <div class="form-group form-input col-md-4">
+          <label for="book-postal" class="form-label full-field">Postal Code</label>
+            <input
+              type="text"
+              field="*{postal}"
+              name="postal"
+              class="form-control"
+              maxlength="20"
+              id="book-postal"
+              autocomplete="off"
+              required/>
         </div>
 
-
+        <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMP6_yRqbqV11t3gAHwWidvWSWwqc9kyE&callback=initAutocomplete&libraries=places&v=weekly"
+        async
+      ></script>
+      
         <div class="blank"></div>
         <div class="form-group form-input">
           <button class="btn btn-success right-align" type="submit">Submit book</button>
