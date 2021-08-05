@@ -71,10 +71,16 @@ public class Main {
   @GetMapping(
     path = "/signup"
   )
-  public String getSignUpForm(Map<String, Object> model) {
-    Account account = new Account();
-    model.put("account", account);
-    return "signup";
+  public String getSignUpForm(Map<String, Object> model, HttpServletRequest request) {
+    HttpSession session = request.getSession(false);
+    if(session != null) { // If already logged in
+      return "redirect:/already";
+    }
+    else {
+      Account account = new Account();
+      model.put("account", account);
+      return "signup";
+    }
   }
 
   // Save the account data into the database
@@ -110,10 +116,16 @@ public class Main {
   @GetMapping(
     path = "/login"
   )
-  public String getLoginForm(Map<String, Object> model) {
-    Account account = new Account();
-    model.put("account", account);
-    return "login";
+  public String getLoginForm(Map<String, Object> model, HttpServletRequest request) {
+    HttpSession session = request.getSession(false);
+    if(session != null) { // If already logged in
+      return "redirect:/already";
+    }
+    else {
+      Account account = new Account();
+      model.put("account", account);
+      return "login";
+    }
   }
 
   @PostMapping (
@@ -319,6 +331,11 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
   @RequestMapping("/access")
   String access() {
     return "access";
+  }
+
+  @RequestMapping("/already")
+  String already() {
+    return "already";
   }
 
   @Bean
