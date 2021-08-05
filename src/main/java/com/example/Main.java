@@ -278,6 +278,30 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
   String author() {
     return "author";
   }
+
+  @RequestMapping("/admin")
+  String admin(HttpServletRequest request) {
+    HttpSession session = request.getSession(false);
+    if(session == null) { // If not logged in
+      return "redirect:/invalid";
+    }
+
+    else {
+      String type = (String)session.getAttribute("Type");
+      if(type.equals("Admin")) {
+        return "redirect:/admin";
+      }
+      else {
+        return "redirect:/access";
+      }
+    }
+  }
+
+  @RequestMapping("/access")
+  String access() {
+    return "access";
+  }
+
   @Bean
   public DataSource dataSource() throws SQLException {
     if (dbUrl == null || dbUrl.isEmpty()) {
