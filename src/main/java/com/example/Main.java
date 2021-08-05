@@ -235,11 +235,12 @@ public String getProductForm(Map<String, Object> model) {
   consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
 )
 
-public String handleBrowserProductSubmit(Map<String, Object> model, Product product) throws Exception {
+public String handleBrowserProductSubmit(Map<String, Object> model, Product product, HttpServletRequest request) throws Exception {
   try (Connection connection = dataSource.getConnection()) {
     Statement stmt = connection.createStatement();
+    HttpSession session = request.getSession();
     stmt.executeUpdate("CREATE TABLE IF NOT EXISTS products (productId serial, sellerId varchar(20), title varchar(80), image varchar(50), status bool, price varchar(10), author varchar(80), subject varchar(40), description varchar(400), address01 varchar(200), address02 varchar(100), city varchar(20), province varchar(40), postal varchar(10))");
-    String sql = "INSERT INTO products (title, status, price, author, subject, description, address01, city, province, postal) VALUES ('"+ product.getTitle() +"','"+ "TRUE"+ "','"+ product.getPrice()+ "','" + product.getAuthor() + "','"+ product.getSubject() +"','"+ product.getDescription() + "','" + product.getAddress01()+ "','" + product.getCity()+ "','" + product.getProvince()+ "','" + product.getPostal()+"')";
+    String sql = "INSERT INTO products (sellerid, title, status, price, author, subject, description, address01, city, province, postal) VALUES ('"+session.getAttribute("ID")+"','"+product.getTitle() +"','"+ "TRUE"+ "','"+ product.getPrice()+ "','" + product.getAuthor() + "','"+ product.getSubject() +"','"+ product.getDescription() + "','" + product.getAddress01()+ "','" + product.getCity()+ "','" + product.getProvince()+ "','" + product.getPostal()+"')";
     stmt.executeUpdate(sql);
     // System.out.println(account.getName() + " " + account.getPassword());
     return "redirect:/success";
