@@ -301,7 +301,7 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
 
     else {
       String type = (String)session.getAttribute("Type");
-      if(type.equals("Author")) {
+      if(type.equals("Author")) { // Admins can access everything
         return "redirect:/author";
       }
       else {
@@ -328,14 +328,74 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
     }
   }
 
+  //=============================================
+  // ACCESS
+  //=============================================
   @RequestMapping("/access")
   String access() {
     return "access";
   }
 
+  @PostMapping(
+  path = "/access",
+  consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
+  )
+
+  String PostAccess(HttpServletRequest request) {
+    HttpSession session = request.getSession(false);
+    String type = (String)session.getAttribute("Type");
+    if(type.equals("Admin"))
+      {
+        
+        return "redirect:/admin";
+      }
+
+      else if(type.equals("Author"))
+      {
+        
+        return "redirect:/author";
+      }
+
+      else // Its a normal user if it gets here.
+      {
+        
+        return "redirect:/";
+      }
+  }
+
+  //===========================================================
+  // Already Logged In but trying to access Sign-up or login
+  //===========================================================
   @RequestMapping("/already")
   String already() {
     return "already";
+  }
+
+  @PostMapping(
+  path = "/already",
+  consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
+  )
+
+  String PostAlready(HttpServletRequest request) {
+    HttpSession session = request.getSession(false);
+    String type = (String)session.getAttribute("Type");
+    if(type.equals("Admin"))
+      {
+        
+        return "redirect:/admin";
+      }
+
+      else if(type.equals("Author"))
+      {
+        
+        return "redirect:/author";
+      }
+
+      else // Its a normal user if it gets here.
+      {
+        
+        return "redirect:/";
+      }
   }
 
   @Bean
