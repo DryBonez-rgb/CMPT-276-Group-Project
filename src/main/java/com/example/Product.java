@@ -18,6 +18,7 @@ public class Product
     private String city;
     private String province;
     private String postal;
+    private String isbn;
 
 
 
@@ -88,6 +89,10 @@ public class Product
     {
         return this.postal;
     }
+    public String getIsbn()
+    {
+        return this.isbn;
+    }
 
     public void setTitle(String a)
     {
@@ -147,6 +152,11 @@ public class Product
     public void setPostal(String j)
     {
         this.postal = j;
+    }
+
+    public void setIsbn(String k)
+    {
+        this.isbn = k;
     }
 
 
