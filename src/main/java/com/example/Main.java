@@ -224,10 +224,16 @@ public String handleBrowserOrderSubmit(Map<String, Object> model, Order order) t
 @GetMapping(
   path = "/upload"
 )
-public String getProductForm(Map<String, Object> model) {
-  Product product = new Product();
-  model.put("product", product);
-  return "upload";
+public String getProductForm(Map<String, Object> model, HttpServletRequest request) {
+  HttpSession session = request.getSession(false);
+  if(session == null) { // If not logged in
+      return "redirect:/invalid";
+    }
+  else {
+    Product product = new Product();
+    model.put("product", product);
+    return "upload";
+  }
 }
 
 @PostMapping (
@@ -275,8 +281,21 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
 
 
   @RequestMapping("/author")
-  String author() {
-    return "author";
+  String author(HttpServletRequest request) {
+    HttpSession session = request.getSession(false);
+    if(session == null) { // If not logged in
+      return "redirect:/invalid";
+    }
+
+    else {
+      String type = (String)session.getAttribute("Type");
+      if(type.equals("Author")) {
+        return "redirect:/author";
+      }
+      else {
+        return "redirect:/access";
+      }
+    }
   }
 
   @RequestMapping("/admin")
