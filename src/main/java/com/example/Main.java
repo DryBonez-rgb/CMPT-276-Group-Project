@@ -37,6 +37,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Map;
 
+import java.io.*;  
+import javax.servlet.*;  
+import javax.servlet.http.*;  
+
 @Controller
 @SpringBootApplication
 public class Main {
@@ -117,7 +121,7 @@ public class Main {
     consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
   )
 
-  public String handleBrowserAccountLogin(Map<String, Object> model, Account user) throws Exception {
+  public String handleBrowserAccountLogin(Map<String, Object> model, Account user, HttpServletRequest request) throws Exception {
    
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
@@ -132,35 +136,35 @@ public class Main {
 
       if(passcheck.equals(rs.getString("password"))) // check for valid password
       {
-  
       
-
-      Account CurrentUser = new Account();
-      CurrentUser.setName(rs.getString("name"));
-      CurrentUser.setID(rs.getString("id"));
-      CurrentUser.setPassword(rs.getString("password"));
-      CurrentUser.setType(rs.getString("type"));
-      CurrentUser.setPremium(rs.getBoolean("premium"));
+      HttpSession session = request.getSession();
       
-      System.out.println(CurrentUser.getName() + " " + CurrentUser.getPassword() + " " + CurrentUser.getID() + " " + CurrentUser.getType());
+      session.setAttribute("name", rs.getString("name"));
+      session.setAttribute("password", rs.getString("password"));
+      session.setAttribute("ID", rs.getString("id"));
+      session.setAttribute("Type", rs.getString("type"));
+      session.setAttribute("Premium", rs.getBoolean("premium"));
       
-      String type = CurrentUser.getType();
+      
+      System.out.println(session.getAttribute("name") + " " + session.getAttribute("password")  + " " + session.getAttribute("ID") + " " + session.getAttribute("Type"));
+      
+      String type = (String)session.getAttribute("Type");
 
       if(type.equals("Normal"))
       {
-        model.put("user", CurrentUser);
+        
         return "redirect:/";
       }
 
       else if(type.equals("Author"))
       {
-        model.put("user", CurrentUser);
+        
         return "redirect:/author";
       }
 
       else if(type.equals("Admin"))
       {
-        model.put("user", CurrentUser);
+        
         return "redirect:/admin";
       }
 
