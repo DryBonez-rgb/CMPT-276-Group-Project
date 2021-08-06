@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="/stylesheets/css/product.css">
+        <title>Comfirm order</title>
+        <script src="/stylesheets/js/auto.complete.js"></script>
+
+    </head>
+    <body>
+        <div class="container">
+            <a href="/"><img src="/ReadME-logo-alt.png" class="logo_medium"></a>
+            <form class="row g-3 needs-validation"  action="#" method="post" th:action="@{/upload}" th:object="${product}" autocomplete="off">
+              
+                <h2>Where is this book shipping to?</h2>
+                <div class="alert alert-success" role="alert">
+                    <h4>Before you start</h4>
+                    <hr>
+                    <p>Please <b>DO NOT</b> share your personal information<br>This website is built for study purpose only</p>
+                </div>
+        
+                <div class="form-group form-input col-md-6">
+                    <label for="book-addr-01" class="form-label full-field">Address Line 1</label>
+                    <input
+                        type="text"
+                        field="*{address01}"
+                        name="address01"
+                        class="form-control"
+                        maxlength="200"
+                        id="book-addr-01"
+                        autocomplete="off"
+                        required/>
+                    <small>Street address, P.O. box, company name, c/o</small>
+                    <div class="invalid-feedback">
+                        Please enter a valid address.
+                    </div>
+                </div>
+        
+                <div class="form-group form-input col-md-6">
+                    <label for="book-addr-02" class="form-label full-field">Address Line 2</label>
+                    <input
+                        type="text"
+                        field="*{address02}"
+                        name="address02"
+                        class="form-control"
+                        maxlength="100"
+                        id="book-addr-02"
+                        autocomplete="off"
+                        />
+                    <small>Apartment, suite, unit, building, floor, etc</small>
+                </div>
+        
+                <div class="form-group form-input col-md-4">
+                    <label for="book-city" class="form-label full-field">City</label>
+                    <input
+                        type="text"
+                        field="*{city}"
+                        name="city"
+                        class="form-control"
+                        maxlength="20"
+                        id="book-city"
+                        autocomplete="off"
+                        required/>
+                </div>
+        
+                <div class="form-group form-input col-md-4">
+                    <label for="book-province" class="form-label full-field">Province</label>
+                    <input
+                        type="text"
+                        field="*{province}"
+                        name="province"
+                        class="form-control"
+                        maxlength="20"
+                        id="book-province"
+                        autocomplete="off"
+                        required/>
+                </div>
+        
+                <div class="form-group form-input col-md-4">
+                    <label for="book-postal" class="form-label full-field">Postal Code</label>
+                    <input
+                        type="text"
+                        field="*{postal}"
+                        name="postal"
+                        class="form-control"
+                        maxlength="20"
+                        id="book-postal"
+                        autocomplete="off"
+                        required/>
+                </div>
+      
+                <script src="https://maps.googleapis.com/maps/api/js?language=en&key=AIzaSyCMP6_yRqbqV11t3gAHwWidvWSWwqc9kyE&callback=initAutocomplete&libraries=places&v=weekly" async>
+                </script>
+            
+                <div class="blank"></div>
+                <div class="form-group form-input">
+                    <button class="btn btn-success right-align" type="button" id="verify">Get shipping rate</button>
+                </div>
+                <h2 id="displayDistance" style="display: none;">
+                    Your total distance is: <span id="distance"></span><br>
+                    Your shipping cost is: $<span id="rate"></span>
+
+                </h2>
+            </form>
+          </div>
+        <script>
+            const origin_address = "4770+main+street+vancouver";
+            const API_key = "AIzaSyCb0f_PbINMu_bV5Bo096XnmA4Gf-VKKtQ";
+            let destination_address;
+            
+            function shippingRate(distanceString){
+                console.log("this is this distance");
+                console.log(distanceString);
+
+                let distance = parseFloat(distanceString.replace(',',''));
+                console.log("parsed distance:");
+                console.log(distance);
+                if (distance <= 5){
+                    return 9.99;
+                }
+                else if (distance > 5 && distance <= 20){
+                    return (9.99 + 0.1 * Math.ceil((distance - 5)/5)).toFixed(2);
+                }// maximum: $12.99
+                else if (distance > 20 && distance <= 50){
+                    return (12.99 + 0.075 * Math.ceil((distance - 20)/5)).toFixed(2);
+                }// maximum: $17.49
+                else if (distance > 50 && distance <= 100){
+                    return (17.49 + 0.05 * Math.ceil((distance - 50)/5)).toFixed(2);
+                }// maximum: $22.49
+                else{
+                    return (22.49 + 0.04 * Math.ceil((distance - 100)/5)).toFixed(2);
+                }
+            }
+
+            //  changes the address stored in the global variable destination_address
+            function updateAddress(){
+                destination_address = document.getElementById("book-addr-01").value+document.getElementById("book-city").value+"+"+document.getElementById("book-province").value+"+"+document.getElementById("book-postal").value;
+                console.log(destination_address);
+            }
+
+            async function displayDistance(){
+                //  A new address has been entered
+                updateAddress();
+                //  get origin's location code
+                const geocodingUrl_ori = "https://maps.googleapis.com/maps/api/geocode/json?language=en&address="
+                + origin_address
+                + "&key="
+                + API_key;
+
+                const getGeoCode_Ori = fetch(geocodingUrl_ori)
+                    .then(response => response.json())
+                    .then((result) => {
+                        console.log(result);
+                        return result.results[0].geometry.location;
+                    });
+                
+                //  get destination's location code
+                const geocodingUrl_des = "https://maps.googleapis.com/maps/api/geocode/json?language=en&address="
+                + destination_address
+                + "&key="
+                + API_key;
+
+                const getGeoCode_Des = fetch(geocodingUrl_des)
+                    .then(response => response.json())
+                    .then((result) => {
+                        console.log(result);
+                        return result.results[0].geometry.location;
+                    });
+
+                //  get distance's url
+                const getDistanceUrl = async () => {
+                    const location_ori = await getGeoCode_Ori;
+                    const location_des = await getGeoCode_Des;
+                    console.log(location_ori);
+                    console.log(location_des);
+                    const distanceUrl = "https://maps.googleapis.com/maps/api/distancematrix/json?language=en&units=metric&origins="
+                        + location_ori.lat + "," + location_ori.lng
+                        + "&destinations="
+                        + location_des.lat + "," + location_des.lng
+                        + "&key="
+                        + API_key;
+                    console.log(distanceUrl);
+                    // a.results[0].geometry.location;
+                    return distanceUrl;
+                };
+
+                //  request distance from google api
+                const getDistance = async () => {
+                    const distanceUrl = await getDistanceUrl();
+                    console.log(distanceUrl);
+                    const distanceData = fetch(distanceUrl)
+                    .then(response => response.json())
+                    .then((result) => {
+                        return result.rows[0].elements[0].distance.text;
+                    })
+                    console.log(distanceData);
+                    return distanceData;
+                };
+                //  Stops the Distance div from not displaying
+                document.getElementById("displayDistance").style.display="inline";
+                const distance = await getDistance();
+                document.getElementById("distance").innerHTML = distance;
+                const shippingCost = shippingRate(distance);
+                document.getElementById("rate").innerHTML = shippingCost;
+            }
+            
+            
+            document.getElementById("verify").addEventListener("click", displayDistance);
+
+</script>
+    </body>
+</html>

@@ -12,11 +12,11 @@ let address2Field;
 let postalField;
 
 function initAutocomplete() {
-  address1Field = document.querySelector("#book-address-01");
-  address2Field = document.querySelector("#book-address-02");
+  address1Field = document.querySelector("#book-addr-01");
+  address2Field = document.querySelector("#book-addr-02");
   postalField = document.querySelector("#book-postal");
   // Create the autocomplete object, restricting the search predictions to
-  // addresses in the US and Canada.
+  // addresses in Canada.
   autocomplete = new google.maps.places.Autocomplete(address1Field, {
     componentRestrictions: { country: ["ca"] },
     fields: ["address_components", "geometry"],
@@ -70,7 +70,8 @@ function fillInAddress() {
         break;
       }
       case "country":
-        document.querySelector("#book-country").value = component.long_name;
+        // country is defaulted to be canada
+        // document.querySelector("#book-country").value = "Canada";
         break;
     }
   }
