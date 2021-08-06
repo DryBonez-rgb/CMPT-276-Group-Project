@@ -285,7 +285,7 @@ public String handleBrowserOrderSubmit(Map<String, Object> model, Order order, H
     String sql = "INSERT INTO orders (productID,sellerID,buyerID) VALUES ('" + order.getProductID()  + "','"  + order.getSellerID() + "','" + session.getAttribute("ID") + "')"; 
     stmt.executeUpdate(sql);
     System.out.println(order.getProductID() + " " + order.getSellerID() + " " + session.getAttribute("ID"));
-    return "redirect:/ordersuccess";
+    return "redirect:/success";
   }
   catch (Exception e) {
     model.put("message", e.getMessage());
