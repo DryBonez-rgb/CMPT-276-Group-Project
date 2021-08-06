@@ -238,6 +238,7 @@ public class Main {
         ord.setProductID(rs.getString("productID"));
         ord.setSellerID(rs.getString("sellerID"));
         ord.setBuyerID(rs.getString("buyerID"));
+        ord.setCost(rs.getString("cost"));
         Orders.add(ord);
       }
       model.put("Orders", Orders);
@@ -281,10 +282,10 @@ public String handleBrowserOrderSubmit(Map<String, Object> model, Order order, H
   try (Connection connection = dataSource.getConnection()) {
     Statement stmt = connection.createStatement();
     HttpSession session = request.getSession();
-    stmt.executeUpdate("CREATE TABLE IF NOT EXISTS orders (id serial, productID varchar(20), sellerID varchar(20), buyerID varchar(20))");
-    String sql = "INSERT INTO orders (productID,sellerID,buyerID) VALUES ('" + order.getProductID()  + "','"  + order.getSellerID() + "','" + session.getAttribute("ID") + "')"; 
+    stmt.executeUpdate("CREATE TABLE IF NOT EXISTS orders (id serial, productID varchar(20), sellerID varchar(20), buyerID varchar(20), cost varchar(20))");
+    String sql = "INSERT INTO orders (productID,sellerID,buyerID,cost) VALUES ('" + order.getProductID()  + "','"  + order.getSellerID() + "','" + session.getAttribute("ID") + "','" + order.getCost() + "')"; 
     stmt.executeUpdate(sql);
-    System.out.println(order.getProductID() + " " + order.getSellerID() + " " + session.getAttribute("ID"));
+    System.out.println(order.getProductID() + " " + order.getSellerID() + " " + session.getAttribute("ID") + " " + order.getCost());
     return "redirect:/success";
   }
   catch (Exception e) {
@@ -641,6 +642,7 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
             ord.setProductID(rs.getString("productID"));
             ord.setSellerID(rs.getString("sellerID"));
             ord.setBuyerID(rs.getString("buyerID"));
+            ord.setCost(rs.getString("cost"));
             Orders.add(ord);
           }
           model.put("Orders", Orders);
