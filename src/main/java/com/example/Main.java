@@ -54,11 +54,32 @@ public class Main {
   public static void main(String[] args) throws Exception {
     SpringApplication.run(Main.class, args);
   }
-
+  
+ // ==============================
+ // HOME PAGE
+ // ==============================
   @RequestMapping("/")
-  String index() {
-    return "index";
+  String index(HttpServletRequest request) {
+    HttpSession session = request.getSession(false);
+    if(session != null) { // If already logged in
+      return "home";
+    }
+    else {
+      return "index";
+    }
   }
+
+  @RequestMapping("/home")
+  String home(HttpServletRequest request)  {
+    HttpSession session = request.getSession(false);
+    if(session != null) { // If logged in may continue
+      return "home";
+    }
+    else {
+      return "invalid";
+    }
+  }
+
  // ==============================
  // SIGN UP
  // ==============================
