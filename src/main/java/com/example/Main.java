@@ -299,6 +299,9 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
     }
   }
 
+  //=============================================
+  // AUTHOR
+  //=============================================
 
   @RequestMapping("/author")
   String author(HttpServletRequest request) {
@@ -318,6 +321,9 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
     }
   }
 
+  //=============================================
+  // ADMIN
+  //=============================================
   @RequestMapping("/admin")
   String admin(HttpServletRequest request) {
     HttpSession session = request.getSession(false);
@@ -417,6 +423,97 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
     }
     return "redirect:/";  //Where you go after logout.
 }
+
+  //===========================================================
+  // Database Table HTMLS
+  //===========================================================
+
+  // Normal Users
+  //===========================================================
+  @RequestMapping("/mdb")
+  public String getMemberOverview(Map <String, Object> model, HttpServletRequest request) {
+    HttpSession session = request.getSession(false);
+    if(session == null) { // If not logged in
+      return "redirect:/invalid";
+    }
+    else {
+      String type = (String)session.getAttribute("Type");
+      if(type.equals("Admin")) {
+        try (Connection connection = dataSource.getConnection()) {
+          Statement stmt = connection.createStatement();
+          ResultSet rs = stmt.executeQuery("SELECT * FROM accounts WHERE type = 'Normal'");
+    
+          ArrayList<Account> NormalUsers = new ArrayList<Account>();
+          
+    
+          while (rs.next()) {
+            Account user = new Account();
+            user.setName(rs.getString("name"));
+            user.setPassword(rs.getString("password"));
+            user.setID(rs.getString("ID"));
+            user.setType(rs.getString("Type"));
+            user.setPremium(rs.getBoolean("premium"));
+            NormalUsers.add(user);
+          }
+    
+          model.put("Users", NormalUsers);
+    
+          return "mdb";
+        } catch (Exception e) {
+          model.put("message", e.getMessage());
+          return "error";
+        }
+      }
+      else {
+        return "redirect:/access";
+      }
+    }
+  }
+
+  // Author Users
+  //===========================================================
+  @RequestMapping("/adb")
+  public String getAuthorOverview(Map <String, Object> model, HttpServletRequest request) {
+    HttpSession session = request.getSession(false);
+    if(session == null) { // If not logged in
+      return "redirect:/invalid";
+    }
+    else {
+      String type = (String)session.getAttribute("Type");
+      if(type.equals("Admin")) {
+        try (Connection connection = dataSource.getConnection()) {
+          Statement stmt = connection.createStatement();
+          ResultSet rs = stmt.executeQuery("SELECT * FROM accounts WHERE type = 'Author'");
+    
+          ArrayList<Account> AuthorUsers = new ArrayList<Account>();
+          
+    
+          while (rs.next()) {
+            Account user = new Account();
+            user.setName(rs.getString("name"));
+            user.setPassword(rs.getString("password"));
+            user.setID(rs.getString("ID"));
+            user.setType(rs.getString("Type"));
+            user.setPremium(rs.getBoolean("premium"));
+            AuthorUsers.add(user);
+          }
+    
+          model.put("Users", AuthorUsers);
+    
+          return "mdb";
+        } catch (Exception e) {
+          model.put("message", e.getMessage());
+          return "error";
+        }
+      }
+      else {
+        return "redirect:/access";
+      }
+    }
+  }
+
+
+
 
   @Bean
   public DataSource dataSource() throws SQLException {
