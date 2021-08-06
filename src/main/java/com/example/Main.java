@@ -230,7 +230,7 @@ public class Main {
   else { //logged in
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
-      ResultSet rs = stmt.executeQuery("SELECT * FROM orders WHERE sellerID='" + session.getAttribute("ID") + "'");
+      ResultSet rs = stmt.executeQuery("SELECT * FROM orders WHERE sellerID='" + session.getAttribute("ID") + "'" + "OR buyerID='" + session.getAttribute("ID") + "'");
       ArrayList<Order> Orders = new ArrayList<Order>();
       while (rs.next()) {
         Order ord = new Order();
@@ -268,7 +268,7 @@ public String getOrderForm(Map<String, Object> model, HttpServletRequest request
   else {
     Order order = new Order();
     model.put("order", order);
-    return "ordersuccess";
+    return "order";
   }
 }
 
