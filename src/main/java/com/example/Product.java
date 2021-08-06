@@ -99,6 +99,16 @@ public class Product
         this.title = a;
     }
 
+    public void setProductID(String p)
+    {
+       this.productID = p;
+    }
+    
+    public void setSellerID(String s)
+    {
+        this.sellerID = s;
+    } 
+
     public void setStatus(Boolean b)
     {
         this.status = b;

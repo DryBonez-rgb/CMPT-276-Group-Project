@@ -266,7 +266,7 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
     Statement stmt = connection.createStatement();
     HttpSession session = request.getSession();
     stmt.executeUpdate("CREATE TABLE IF NOT EXISTS products (productId serial, sellerId varchar(20), title varchar(80), isbn varchar(20), image varchar(50), status bool, price varchar(10), author varchar(80), subject varchar(40), description varchar(400), address01 varchar(200), address02 varchar(100), city varchar(20), province varchar(40), postal varchar(10))");
-    String sql = "INSERT INTO products (sellerid, title, isbn, status, price, author, subject, description, address01, city, province, postal) VALUES ('" + session.getAttribute("ID") + "','" + product.getTitle() + "','" + product.getIsbn() + "','" + "TRUE" + "','"+ product.getPrice()+ "','" + product.getAuthor() + "','"+ product.getSubject() +"','"+ product.getDescription() + "','" + product.getAddress01()+ "','" + product.getCity()+ "','" + product.getProvince()+ "','" + product.getPostal()+"')";
+    String sql = "INSERT INTO products (sellerId, title, isbn, status, price, author, subject, description, address01, city, province, postal) VALUES ('" + session.getAttribute("ID") + "','" + product.getTitle() + "','" + product.getIsbn() + "','" + "TRUE" + "','"+ product.getPrice()+ "','" + product.getAuthor() + "','"+ product.getSubject() +"','"+ product.getDescription() + "','" + product.getAddress01()+ "','" + product.getCity()+ "','" + product.getProvince()+ "','" + product.getPostal()+"')";
     stmt.executeUpdate(sql);
     // System.out.println(account.getName() + " " + account.getPassword());
     return "redirect:/success";
@@ -512,6 +512,56 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
     }
   }
 
+  // Product Data
+  //===========================================================
+  @RequestMapping("/proddb")
+  public String getProductOverview(Map <String, Object> model, HttpServletRequest request) {
+    HttpSession session = request.getSession(false);
+    if(session == null) { // If not logged in
+      return "redirect:/invalid";
+    }
+    else {
+      String type = (String)session.getAttribute("Type");
+      if(type.equals("Admin")) {
+        try (Connection connection = dataSource.getConnection()) {
+          Statement stmt = connection.createStatement();
+          ResultSet rs = stmt.executeQuery("SELECT * FROM products");
+    
+          ArrayList<Product> Products = new ArrayList<Product>();
+          
+    
+          while (rs.next()) {
+            Product prod = new Product();
+            prod.setProductID(rs.getString("productId"));
+            prod.setTitle(rs.getString("title"));
+            prod.setSellerID(rs.getString("sellerId"));
+            prod.setStatus(rs.getBoolean("status"));
+            prod.setIsbn(rs.getString("isbn"));
+            prod.setPrice(rs.getString("price"));
+            prod.setAuthor(rs.getString("author"));
+            prod.setSubject(rs.getString("subject"));
+            // prod.setDescription(rs.getString("description"));
+            prod.setAddress01(rs.getString("address01"));
+            prod.setAddress02(rs.getString("address02"));
+            prod.setCity(rs.getString("city"));
+            prod.setProvince(rs.getString("province"));
+            prod.setPostal(rs.getString("postal"));
+            Products.add(prod);
+          }
+    
+          model.put("Products", Products);
+    
+          return "proddb";
+        } catch (Exception e) {
+          model.put("message", e.getMessage());
+          return "error";
+        }
+      }
+      else {
+        return "redirect:/access";
+      }
+    }
+  }
 
 
 
