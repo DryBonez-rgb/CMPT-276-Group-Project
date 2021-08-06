@@ -63,11 +63,10 @@
 					<div class="row">
 						<div class="col-lg-3 col-md-3 col-sm-5 col-xs-12">
 							<div class="header-search">
-								<class="input-form" action="#" method="post" th:action="@{/search}" th:object="${product}">
-									<input type="text" th:field=*{title} placeholder="Enter the book title here" />
-									
-                                    <input type="submit" value="Search" class="fa fa-search">
-								</form>
+							<form action="#">
+									<input type="text" placeholder="Search entire store here..." />
+									<a href="#"><i class="fa fa-search"></i></a>
+							</form>	
 							</div>
 						</div>
 						<div class="col-lg-6 col-md-6 col-sm-4 col-xs-12">
