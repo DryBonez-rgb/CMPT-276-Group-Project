@@ -37,12 +37,12 @@ public class Order {
         this.productID = p;
     }
 
-    public void sellerID(String s)
+    public void setSellerID(String s)
     {
         this.sellerID = s;
     }
 
-    public void buyerID(String b)
+    public void setBuyerID(String b)
     {
         this.buyerID = b;
     }

@@ -219,6 +219,41 @@ public class Main {
   }
 
 //================================
+// ORDER HISTORY  Pull any order from the order database with SellerID or buyerID that matches the current user ID
+//================================
+ @RequestMapping("/orderhistory")
+ public String handleBrowserOrderHistory(Map <String, Object> model, HttpServletRequest request) {
+  HttpSession session = request.getSession(false);
+  if(session == null) { // If not logged in
+      return "redirect:/invalid";
+  }
+  else { //logged in
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM orders WHERE sellerID='" + session.getAttribute("ID") + "'");
+      ArrayList<Order> Orders = new ArrayList<Order>();
+      while (rs.next()) {
+        Order ord = new Order();
+        ord.setID(rs.getString("id"));
+        ord.setProductID(rs.getString("productID"));
+        ord.setSellerID(rs.getString("sellerID"));
+        ord.setBuyerID(rs.getString("buyerID"));
+        Orders.add(ord);
+      }
+      model.put("Orders", Orders);
+      return "orderhistory";
+
+    }
+    catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
+
+
+  }
+ }
+
+//================================
 // ORDER DATABASE
 //================================
   
@@ -257,6 +292,7 @@ public String handleBrowserOrderSubmit(Map<String, Object> model, Order order, H
     return "error";
   }
 }
+
 
 //================================
 // SUBMIT PRODUCT
