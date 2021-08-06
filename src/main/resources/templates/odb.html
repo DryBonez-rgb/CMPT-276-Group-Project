@@ -1,3 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overall Order History</title>
+</head>
 <body>
-Hello this is odb.html. This page will show the order database for admin in next iteration!
+    <div class="container">
+        <h1>Overall Order History</h1>
+        <table>
+            <tr>
+                <th>Order Serial ID</th>
+                <th>Product ID</th>
+                <th>Seller ID</th>
+                <th>Buyer ID</th>
+            </tr>
+            <ul th:each="order : ${Orders}">
+                <tr>
+                    <td><span th:text="${order.getID()}"/></td>
+                    <td><span th:text="${order.getProductID()}"/></td>
+                    <td><span th:text="${order.getSellerID()}"/></td>
+                    <td><span th:text="${order.getBuyerID()}"/></td>
+                </tr>
+            </ul>
+        </table>
+      </div>
+      <br><br>
+      <a th:href="@{/admin}">Click Here to Return to Admin Page!</a>
+    
 </body>
+</html>

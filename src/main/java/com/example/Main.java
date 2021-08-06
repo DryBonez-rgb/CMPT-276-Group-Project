@@ -620,7 +620,43 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
     }
   }
 
-
+  // Order Data
+  //===========================================================
+  @RequestMapping("/odb")
+  public String getOrderOverview(Map <String, Object> model, HttpServletRequest request) {
+    HttpSession session = request.getSession(false);
+    if(session == null) { // If not logged in
+      return "redirect:/invalid";
+    }
+    else {
+      String type = (String)session.getAttribute("Type");
+      if(type.equals("Admin")) {
+        try (Connection connection = dataSource.getConnection()) {
+          Statement stmt = connection.createStatement();
+          ResultSet rs = stmt.executeQuery("SELECT * FROM orders");
+          ArrayList<Order> Orders = new ArrayList<Order>();
+          while (rs.next()) {
+            Order ord = new Order();
+            ord.setID(rs.getString("id"));
+            ord.setProductID(rs.getString("productID"));
+            ord.setSellerID(rs.getString("sellerID"));
+            ord.setBuyerID(rs.getString("buyerID"));
+            Orders.add(ord);
+          }
+          model.put("Orders", Orders);
+          return "odb";
+    
+        }
+        catch (Exception e) {
+          model.put("message", e.getMessage());
+          return "error";
+        }
+      }
+      else {
+        return "redirect:/access";
+      }
+    }
+  }
 
   @Bean
   public DataSource dataSource() throws SQLException {
