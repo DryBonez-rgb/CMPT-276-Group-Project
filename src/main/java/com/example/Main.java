@@ -660,6 +660,48 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
     }
   }
 
+
+  //Search
+  @GetMapping( 
+    path = "/search"
+  )
+  public String getRect(Map<String, Object> model) {
+    Product input = new Product(); 
+    model.put("input", input);
+    return "search";
+  }
+
+  @PostMapping(
+    path = "/search",
+    consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
+  )
+  public String getRectangleName(Map<String, Object> model, @RequestParam String title) {
+    try (Connection connection = dataSource.getConnection()) {
+    Statement stmt = connection.createStatement();
+    ResultSet rs = stmt.executeQuery("SELECT * FROM products " + "WHERE (title ='"+title+"')");
+    Product output = new Product();
+
+    while (!rs.next()) {
+      
+      rs.getString("author");
+      rs.getString("price");
+    }
+    output.setTitle(rs.getString("title"));
+ 
+    model.put("inputTitle", title);
+    model.put("inputAuthor", rs.getString("author"));
+    model.put("price", rs.getInt("price"));
+
+    return "search";
+    } catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
+  }
+
+  
+
+
   @Bean
   public DataSource dataSource() throws SQLException {
     if (dbUrl == null || dbUrl.isEmpty()) {
