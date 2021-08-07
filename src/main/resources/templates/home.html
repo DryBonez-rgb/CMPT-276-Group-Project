@@ -35,7 +35,7 @@
 
 		<!-- header-area-start -->
         <header>
-            <ul th:each="product : ${products}">
+            <ul th:each="product : ${Products}">
                 <p><a th:href="@{/productdisplay/{id}(id=${product.getProductID()})}"><span th:text="${product.getTitle()}"></a></p> <!-- Evan's Product Display code-->
             </ul>
 			<!-- header-top-area-start -->
