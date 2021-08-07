@@ -168,6 +168,7 @@ public class Main {
       String passcheck = user.getPassword();
 
       if(passcheck.equals(rs.getString("password"))) // check for valid password
+      
       {
 <<<<<<< HEAD
       
@@ -179,15 +180,6 @@ public class Main {
       session.setAttribute("Type", rs.getString("type"));
       session.setAttribute("Premium", rs.getBoolean("premium"));
       
-=======
-  
-      Account CurrentUser = new Account();
-      CurrentUser.setName(rs.getString("name"));
-      CurrentUser.setID(rs.getString("id"));
-      CurrentUser.setPassword(rs.getString("password"));
-      CurrentUser.setType(rs.getString("type"));
-      CurrentUser.setPremium(rs.getBoolean("premium"));
->>>>>>> js
       
       System.out.println(session.getAttribute("name") + " " + session.getAttribute("password")  + " " + session.getAttribute("ID") + " " + session.getAttribute("Type"));
       
@@ -268,21 +260,13 @@ public class Main {
 // ORDER DATABASE
 //================================
   
-<<<<<<< HEAD
 @GetMapping(path = "/order/{pid}")
 public String orderProduct(Map<String, Object> model, @PathVariable String pid, HttpServletRequest request){
-=======
-@GetMapping(
-  path = "/order"
-)
-public String getOrderForm(Map<String, Object> model, HttpServletRequest request) {
->>>>>>> js
   HttpSession session = request.getSession(false);
   if(session == null) { // If not logged in
       return "redirect:/invalid";
     }
   else {
-<<<<<<< HEAD
       try (Connection connection = dataSource.getConnection()) {
 
         Statement stmt = connection.createStatement();
@@ -309,11 +293,6 @@ public String getOrderForm(Map<String, Object> model, HttpServletRequest request
         model.put("message", e.getMessage());
         return "error";
     }
-=======
-    Order order = new Order();
-    model.put("order", order);
-    return "order";
->>>>>>> js
   }
 }
 
