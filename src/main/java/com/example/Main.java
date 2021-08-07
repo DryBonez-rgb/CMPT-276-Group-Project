@@ -258,9 +258,31 @@ public class Main {
 // ORDER DATABASE
 //================================
   
-@GetMapping(
-  path = "/order"
-)
+@GetMapping(path = "/order/{pid}")
+public String orderProduct(Map<String, Object> model, @PathVariable String pid){
+  try (Connection connection = dataSource.getConnection()) {
+
+    Statement stmt = connection.createStatement();
+    ResultSet rs = stmt.executeQuery("SELECT * FROM products WHERE productId="+(Integer.parseInt(pid)));
+    rs.next();
+    System.out.println(pid);
+    Product prod = new Product();
+    prod.setProductID(rs.getString("productId"));
+    prod.setPrice(rs.getString("price"));
+    prod.setAddress01(rs.getString("address01"));
+    prod.setAddress02(rs.getString("address02"));
+    prod.setCity(rs.getString("city"));
+    prod.setProvince(rs.getString("province"));
+    prod.setPostal(rs.getString("postal"));
+    model.put("Product", prod);
+    
+    return "order";
+  } catch (Exception e) {
+    model.put("message", e.getMessage());
+    return "error";
+  }
+}
+
 public String getOrderForm(Map<String, Object> model, HttpServletRequest request) {
   HttpSession session = request.getSession(false);
   if(session == null) { // If not logged in
