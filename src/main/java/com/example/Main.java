@@ -382,7 +382,7 @@ public String handleBrowserEbookSubmit(Map<String, Object> model, Product produc
     String sql = "INSERT INTO products (title, status, price, author, subject, description, address01, city, province, postal) VALUES ('"+ product.getTitle() +"','"+ "TRUE"+ "','"+ product.getPrice()+ "','" + session.getAttribute("name") + "','"+ product.getSubject() +"','"+ product.getDescription() + "','" + product.getAddress01()+ "','" + product.getCity()+ "','" + product.getProvince()+ "','" + product.getPostal()+"')";
     stmt.executeUpdate(sql);
     // System.out.println(account.getName() + " " + account.getPassword());
-    return "redirect:/success";
+    return "redirect:/ebooksuccess";
   }
   catch (Exception e) {
     model.put("message", e.getMessage());
@@ -390,6 +390,26 @@ public String handleBrowserEbookSubmit(Map<String, Object> model, Product produc
   }
 }
 
+@RequestMapping("/ebooksuccess")
+  String GetEbooksuccess(HttpServletRequest request) {
+    HttpSession session = request.getSession(false);
+    if(session == null) { // If not logged in
+      return "redirect:/invalid";
+    }
+
+    else {
+      String type = (String)session.getAttribute("Type");
+      if(type.equals("Author")) {
+        return "ebooksuccess";
+      }
+      else {
+        return "redirect:/access";
+      }
+    }
+  }
+//================================
+// PRODUCT DISPLAY
+//================================
 @RequestMapping("/productdisplay/{pid}")
 String getProduct(Map<String, Object> model, @PathVariable String pid) {
   try (Connection connection = dataSource.getConnection()) {
@@ -406,6 +426,9 @@ String getProduct(Map<String, Object> model, @PathVariable String pid) {
   }
 }
 
+//================================
+// AUTHOR DISPLAY
+//================================
 @RequestMapping("/author/{aid}")
 String getAuthor(Map<String, Object> model, @PathVariable String aid) {
   try (Connection connection = dataSource.getConnection()) {
@@ -477,7 +500,7 @@ String getAuthor(Map<String, Object> model, @PathVariable String aid) {
 
     else {
       String type = (String)session.getAttribute("Type");
-      if(type.equals("Author")) { // Admins can access everything
+      if(type.equals("Author")) {
         return "author";
       }
       else {
