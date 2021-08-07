@@ -683,20 +683,10 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
 
 
   //Search
-  @GetMapping( 
+  @RequestMapping( 
     path = "/search"
   )
-  public String getRect(Map<String, Object> model) {
-    Product input = new Product(); 
-    model.put("input", input);
-    return "search";
-  }
-
-  @PostMapping(
-    path = "/search",
-    consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
-  )
-  public String getRectangleName(Map<String, Object> model, @RequestParam String title) {
+  public String getSearchResult(Map<String, Object> model, @RequestParam String title ) {
     try (Connection connection = dataSource.getConnection()) {
     Statement stmt = connection.createStatement();
     ResultSet rs = stmt.executeQuery("SELECT * FROM products " + "WHERE (title ='"+title+"')");
@@ -712,6 +702,7 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
     model.put("inputTitle", title);
     model.put("inputAuthor", rs.getString("author"));
     model.put("price", rs.getInt("price"));
+    model.put("inputObj", output);
 
     return "search";
     } catch (Exception e) {
@@ -719,7 +710,6 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
       return "error";
     }
   }
-
   
 
 
