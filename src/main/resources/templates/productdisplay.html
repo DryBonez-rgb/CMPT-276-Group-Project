@@ -83,11 +83,9 @@
     <div class="container">
 
         <a href="/"><img src="/ReadME-logo-alt.png" class="logo_medium"></a>
-
-        <h2><strong>Lorem ipsum dolor sit amet</strong></h2>
         <div class="row">
             <div class="col-md-6">
-                <img src="..." class="img-thumbnail" alt="...">
+                <img th:src="@{${src/main/resources/public/database_img + output.image + '.png'}}" class="img-thumbnail" alt="...">
             </div>
             <div class="col-md-6">
                 <table class="table">
@@ -100,19 +98,19 @@
                     <tbody>
                         <tr>
                             <th scope="row">Product Name</th>
-                            <td>Lorem ipsum</td> <!-- Fetch product name from database -->
+                            <td th:text="${output.title}"></td> <!-- Fetch product name from database -->
+                        </tr>
+                        <tr>
+                            <th scope="row">Author</th>
+                            <td th:text="${output.author}"></td> <!-- Fetch product name from database -->
                         </tr>
                         <tr>
                             <th scope="row">Price</th>
-                            <td>Lorem ipsum</td> <!-- Fetch price from database -->
+                            <td th:text="${output.price}"></td> <!-- Fetch price from database -->
                         </tr>
                         <tr>
                             <th scope="row">Seller</th>
-                            <td><a href="url">Lorem ipsum</a></td> <!-- Fetch seller id from database, find seller name with that seller id, and create link to that person's profile -->
-                        </tr>
-                        <tr>
-                            <th scope="row">ISBN</th>
-                            <td>Lorem ipsum</td> <!-- Fetch ISBN from database -->
+                            <td th:text="${output.sellerID}"></td> <!-- Fetch seller id from database -->
                         </tr>
                     </tbody>
                 </table>
@@ -123,6 +121,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+        
 </body>
 
 </html>

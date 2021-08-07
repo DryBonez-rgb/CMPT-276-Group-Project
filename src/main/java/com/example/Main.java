@@ -169,6 +169,7 @@ public class Main {
 
       if(passcheck.equals(rs.getString("password"))) // check for valid password
       {
+<<<<<<< HEAD
       
       HttpSession session = request.getSession();
       
@@ -178,6 +179,15 @@ public class Main {
       session.setAttribute("Type", rs.getString("type"));
       session.setAttribute("Premium", rs.getBoolean("premium"));
       
+=======
+  
+      Account CurrentUser = new Account();
+      CurrentUser.setName(rs.getString("name"));
+      CurrentUser.setID(rs.getString("id"));
+      CurrentUser.setPassword(rs.getString("password"));
+      CurrentUser.setType(rs.getString("type"));
+      CurrentUser.setPremium(rs.getBoolean("premium"));
+>>>>>>> js
       
       System.out.println(session.getAttribute("name") + " " + session.getAttribute("password")  + " " + session.getAttribute("ID") + " " + session.getAttribute("Type"));
       
@@ -258,13 +268,21 @@ public class Main {
 // ORDER DATABASE
 //================================
   
+<<<<<<< HEAD
 @GetMapping(path = "/order/{pid}")
 public String orderProduct(Map<String, Object> model, @PathVariable String pid, HttpServletRequest request){
+=======
+@GetMapping(
+  path = "/order"
+)
+public String getOrderForm(Map<String, Object> model, HttpServletRequest request) {
+>>>>>>> js
   HttpSession session = request.getSession(false);
   if(session == null) { // If not logged in
       return "redirect:/invalid";
     }
   else {
+<<<<<<< HEAD
       try (Connection connection = dataSource.getConnection()) {
 
         Statement stmt = connection.createStatement();
@@ -291,6 +309,11 @@ public String orderProduct(Map<String, Object> model, @PathVariable String pid, 
         model.put("message", e.getMessage());
         return "error";
     }
+=======
+    Order order = new Order();
+    model.put("order", order);
+    return "order";
+>>>>>>> js
   }
 }
 
@@ -356,6 +379,87 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
   }
 }
 
+//================================
+// SUBMIT EBOOK
+//================================
+
+@GetMapping(
+  path = "/uploadebook"
+)
+public String getEbookForm(Map<String, Object> model) {
+  Product product = new Product();
+  model.put("product", product);
+  return "uploadebook";
+}
+
+@PostMapping (
+  path = "/uploadebook",
+  consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
+)
+
+public String handleBrowserEbookSubmit(Map<String, Object> model, Product product, HttpServletRequest request) throws Exception {
+  try (Connection connection = dataSource.getConnection()) {
+    Statement stmt = connection.createStatement();
+    HttpSession session = request.getSession(); 
+    stmt.executeUpdate("CREATE TABLE IF NOT EXISTS products (productId serial, sellerId varchar(20), title varchar(80), image varchar(50), status bool, price varchar(10), author varchar(80), subject varchar(40), description varchar(400), address01 varchar(200), address02 varchar(100), city varchar(20), province varchar(40), postal varchar(10))");
+    String sql = "INSERT INTO products (title, status, price, author, subject, description, address01, city, province, postal) VALUES ('"+ product.getTitle() +"','"+ "TRUE"+ "','"+ product.getPrice()+ "','" + session.getAttribute("name") + "','"+ product.getSubject() +"','"+ product.getDescription() + "','" + product.getAddress01()+ "','" + product.getCity()+ "','" + product.getProvince()+ "','" + product.getPostal()+"')";
+    stmt.executeUpdate(sql);
+    // System.out.println(account.getName() + " " + account.getPassword());
+    return "redirect:/success";
+  }
+  catch (Exception e) {
+    model.put("message", e.getMessage());
+    return "error";
+  }
+}
+
+@RequestMapping("/productdisplay/{pid}")
+String getProduct(Map<String, Object> model, @PathVariable String pid) {
+  try (Connection connection = dataSource.getConnection()) {
+    Statement stmt = connection.createStatement();
+    ResultSet rs = stmt.executeQuery("SELECT * FROM products WHERE productId=" + Integer.parseInt(pid));
+  
+    Product productDisplayed = new Product(rs.getString("title"), rs.getString("author"), rs.getString("price"), rs.getString("sellerID"), rs.getString("image"));
+
+    model.put("output", productDisplayed);
+    return "productdisplay";
+  } catch (Exception e) {
+    model.put("message", e.getMessage());
+    return "error";
+  }
+}
+
+@RequestMapping("/author/{aid}")
+String getAuthor(Map<String, Object> model, @PathVariable String aid) {
+  try (Connection connection = dataSource.getConnection()) {
+    Statement stmt = connection.createStatement();
+    ResultSet rs = stmt.executeQuery("SELECT * FROM accounts WHERE id=" + Integer.parseInt(aid));
+    ResultSet rs2 = stmt.executeQuery("SELECT title FROM products WHERE author='" + rs.getString("name"));
+    ResultSet rs3 = stmt.executeQuery("SELECT productID, buyerID, cost WHERE sellerID=" + Integer.parseInt(aid));
+  
+    Account authorDisplayed = new Account(rs.getString("name"));
+
+    ArrayList<String> outputproduct = new ArrayList<String>();
+    while (rs2.next()) {
+      outputproduct.add(rs2.getString("title"));
+    }
+
+    ArrayList<Order> outputorder = new ArrayList<Order>();
+    while (rs3.next()) {
+      Order order = new Order(rs.getString("productID"), rs.getString("buyerID"), rs.getString("cost"));
+      outputorder.add(order);
+    }
+
+    model.put("outputauthor", authorDisplayed);
+    model.put("outputproduct", outputproduct);
+    model.put("outputorder", outputorder);
+
+    return "author";
+  } catch (Exception e) {
+    model.put("message", e.getMessage());
+    return "error";
+  }
+}
 
   @RequestMapping("/db")
   String db(Map<String, Object> model) {

@@ -20,8 +20,15 @@ public class Product
     private String postal;
     private String isbn;
 
+    public Product() {} // empty constructor
 
-
+    public Product(String title, String author, String price, String sellerID, String image) {
+        this.title = title;
+        this.author = author;
+        this.price = price;
+        this.sellerID = sellerID;
+        this.image = image;
+    }
 
     public String getTitle()
     {
