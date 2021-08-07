@@ -87,7 +87,7 @@
         <h2><strong>Lorem ipsum dolor sit amet</strong></h2>
         <div class="row">
             <div class="col-md-6">
-                <img src="..." class="img-thumbnail" alt="...">
+                <img th:src="@{${src/main/resources/public/database_img + output.image + '.png'}}" class="img-thumbnail" alt="...">
             </div>
             <div class="col-md-6">
                 <table class="table">
@@ -103,16 +103,16 @@
                             <td>Lorem ipsum</td> <!-- Fetch product name from database -->
                         </tr>
                         <tr>
+                            <th scope="row">Author</th>
+                            <td th:text="${output.author}"></td> <!-- Fetch author name from database -->
+                        </tr>
+                        <tr>
                             <th scope="row">Price</th>
-                            <td>Lorem ipsum</td> <!-- Fetch price from database -->
+                            <td th:text="${output.price}"></td> <!-- Fetch price from database -->
                         </tr>
                         <tr>
                             <th scope="row">Seller</th>
-                            <td><a href="url">Lorem ipsum</a></td> <!-- Fetch seller id from database, find seller name with that seller id, and create link to that person's profile -->
-                        </tr>
-                        <tr>
-                            <th scope="row">ISBN</th>
-                            <td>Lorem ipsum</td> <!-- Fetch ISBN from database -->
+                            <td th:text="${output.sellerID}"></td> <!-- Fetch seller id from database -->
                         </tr>
                     </tbody>
                 </table>
