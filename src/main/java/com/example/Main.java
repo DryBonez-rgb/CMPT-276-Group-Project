@@ -37,10 +37,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Map;
 
-import java.io.*;  
-import javax.servlet.*;  
-import javax.servlet.http.*;  
-
 @Controller
 @SpringBootApplication
 public class Main {
@@ -170,6 +166,18 @@ public class Main {
       if(passcheck.equals(rs.getString("password"))) // check for valid password
       
       {
+<<<<<<< HEAD
+=======
+  
+      
+
+      Account CurrentUser = new Account();
+      CurrentUser.setName(rs.getString("name"));
+      CurrentUser.setID(rs.getString("id"));
+      CurrentUser.setPassword(rs.getString("password"));
+      CurrentUser.setType(rs.getString("type"));
+      CurrentUser.setPremium(rs.getBoolean("premium"));
+>>>>>>> parent of 05dc63d (iter 3)
       
       HttpSession session = request.getSession();
       
@@ -259,6 +267,7 @@ public class Main {
 // ORDER DATABASE
 //================================
   
+<<<<<<< HEAD
 @GetMapping(path = "/order/{pid}")
 public String orderProduct(Map<String, Object> model, @PathVariable String pid, HttpServletRequest request){
   HttpSession session = request.getSession(false);
@@ -293,6 +302,15 @@ public String orderProduct(Map<String, Object> model, @PathVariable String pid, 
         return "error";
     }
   }
+=======
+@GetMapping(
+  path = "/order"
+)
+public String get(Map<String, Object> model) {
+  Order order = new Order();
+  model.put("order", order);
+  return "ordersuccess";
+>>>>>>> parent of 05dc63d (iter 3)
 }
 
 // Save the order data into the database
@@ -300,15 +318,14 @@ public String orderProduct(Map<String, Object> model, @PathVariable String pid, 
   path = "/order",
   consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
 )
-public String handleBrowserOrderSubmit(Map<String, Object> model, Order order, HttpServletRequest request) throws Exception {
+public String handleBrowserOrderSubmit(Map<String, Object> model, Order order) throws Exception {
   try (Connection connection = dataSource.getConnection()) {
     Statement stmt = connection.createStatement();
-    HttpSession session = request.getSession();
-    stmt.executeUpdate("CREATE TABLE IF NOT EXISTS orders (id serial, productID varchar(20), sellerID varchar(20), buyerID varchar(20), cost varchar(20))");
-    String sql = "INSERT INTO orders (productID,sellerID,buyerID,cost) VALUES ('" + order.getProductID()  + "','"  + order.getSellerID() + "','" + session.getAttribute("ID") + "','" + order.getCost() + "')"; 
+    stmt.executeUpdate("CREATE TABLE IF NOT EXISTS accounts (id serial, productID varchar(20), sellerID varchar(20), buyerID varchar(20))");
+    String sql = "INSERT INTO accounts (name,password,type,premium) VALUES ('" + order.getID() + "','" + order.getProductID()  + "','"  + order.getSellerID() + "','" + order.getBuyerID() + "')";
     stmt.executeUpdate(sql);
-    System.out.println(order.getProductID() + " " + order.getSellerID() + " " + session.getAttribute("ID") + " " + order.getCost());
-    return "redirect:/success";
+    System.out.println(order.getID() + " " + order.getProductID() + " " + order.getSellerID() + " " + order.getBuyerID());
+    return "redirect:/ordersuccess";
   }
   catch (Exception e) {
     model.put("message", e.getMessage());
@@ -357,6 +374,7 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
   }
 }
 
+<<<<<<< HEAD
 
   @RequestMapping("/db")
   String db(Map<String, Object> model) {
@@ -681,6 +699,8 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
       }
     }
   }
+=======
+>>>>>>> parent of 05dc63d (iter 3)
 
 
   //Search

@@ -22,6 +22,10 @@ public class Product
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 05dc63d (iter 3)
 
     public String getTitle()
     {
