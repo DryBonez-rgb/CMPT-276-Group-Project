@@ -8,6 +8,14 @@ public class Order {
     private String buyerID;
     private String cost;
 
+    public Order() {}
+
+    public Order(String productID, String buyerID, String cost) {
+        this.productID = productID;
+        this.buyerID = buyerID;
+        this.cost = cost;
+    }
+
     public String getID()
     {
         return this.ID;
