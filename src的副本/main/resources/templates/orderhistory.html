@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Associated User Order History</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Associated User Order History</h1>
+        <table>
+            <tr>
+                <th>Order Serial ID</th>
+                <th>Product ID</th>
+                <th>Seller ID</th>
+                <th>Buyer ID</th>
+                <th>Price</th>
+            </tr>
+            <ul th:each="order : ${Orders}">
+                <tr>
+                    <td><span th:text="${order.getID()}"/></td>
+                    <td><span th:text="${order.getProductID()}"/></td>
+                    <td><span th:text="${order.getSellerID()}"/></td>
+                    <td><span th:text="${order.getBuyerID()}"/></td>
+                    <td><span th:text="${order.getCost()}"/></td>
+
+                </tr>
+            </ul>
+        </table>
+      </div>
+      <br><br>
+      <a th:href="@{/home}">Click Here to Return to Home Page!</a>
+    
+</body>
+</html>

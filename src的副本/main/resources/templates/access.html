@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>ReadME Access Denied</title>
+    <style>
+      html, body{
+        background-color: #93AA6F;
+        height: 100%;
+      }
+      .container{
+        position: fixed;
+        background-color: #FFFFFF;
+        width: 80vw;
+        right: 0;
+        margin-bottom: 50px;
+        height:100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Sorry, your access to this page was denied as your currently logged in account does not possess the credentials necassary for this page.</h1>
+      
+      <form action="#" method="post" th:action="@{/access}">
+        <button type="submit" class="btn btn-primary" style="background-color: #93AA6F;width:100%;border-color: #93AA6F;">Return to Home Page</button>
+      </form>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Overview</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Product Overview</h1>
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Product ID</th>
+                <th>Seller ID</th>
+                <th>Status</th>
+                <th>Author</th>
+                <th>Price</th>
+                <th>Subject</th>
+                <th>Description</th>
+                <th>Address 1</th>
+                <th>Address02</th>
+                <th>City</th>
+                <th>Province</th>
+                <th>Postal</th>
+                <th>ISBN</th>
+            </tr>
+            <ul th:each="product : ${Products}">
+                <tr>
+                    <td><span th:text="${product.getTitle()}"/></td>
+                    <td><span th:text="${product.getProductID()}"/></td>
+                    <td><span th:text="${product.getSellerID()}"/></td>
+                    <td><span th:text="${product.getStatus()}"/></td>
+                    <td><span th:text="${product.getAuthor()}"/></td>
+                    <td><span th:text="${product.getPrice()}"/></td>
+                    <td><span th:text="${product.getSubject()}"/></td>
+                    <!-- <td><span th:text="${product.getDescription()}"/></td> -->
+                    <td><span th:text="${product.getAddress01()}"/></td>
+                    <td><span th:text="${product.getAddress02()}"/></td>
+                    <td><span th:text="${product.getCity()}"/></td>
+                    <td><span th:text="${product.getProvince()}"/></td>
+                    <td><span th:text="${product.getPostal()}"/></td>
+                    <td><span th:text="${product.getIsbn()}"/></td>
+                </tr>
+            </ul>
+        </table>
+      </div>
+      <br><br>
+      <a th:href="@{/admin}">Click Here to Return to Admin Page!</a>
+    
+</body>
+</html>

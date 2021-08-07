@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Normal User Overview</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Normal User Overview</h1>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Password</th>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Premium</th>
+            </tr>
+            <ul th:each="User : ${Users}">
+                <tr>
+                    <td><span th:text="${User.getName()}"/></td>
+                    <td><span th:text="${User.getPassword()}"/></td>
+                    <td><span th:text="${User.getID()}"/></td>
+                    <td><span th:text="${User.getType()}"/></td>
+                    <td><span th:text="${User.getPremium()}"/></td>
+                </tr>
+            </ul>
+        </table>
+      </div>
+      <br><br>
+      <a th:href="@{/admin}">Click Here to Return to Admin Page!</a>
+    
+</body>
+</html>

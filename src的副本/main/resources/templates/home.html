@@ -170,26 +170,11 @@
 			</div>
 		</div>
 		<!-- slider-area-end -->
-    <div>
-        <div class="row">
-					<div class="col-lg-12">
-						<!-- tab-menu-start -->
-						<div class="tab-menu mb-40 text-center">
-							<ul>
-								<li class="ac#"><a href="#" data-toggle="tab">Product list	</a></li>
-								
-							</ul>
-						</div>
-						<!-- tab-menu-end -->
-					</div>
-		</div>
-                <div>
-                    <ul th:each="product : ${Products}">
-                    <p><a th:href="@{/productdisplay/{id}(id=${product.getProductID()})}"><span th:text="${product.getTitle()}"></a></p> <!-- Evan's Product Display code-->
-                     </ul>
-                 </div>
+        <div>
+        <ul th:each="product : ${Products}">
+                <p><a th:href="@{/productdisplay/{id}(id=${product.getProductID()})}"><span th:text="${product.getTitle()}"></a></p> <!-- Evan's Product Display code-->
+        </ul>
         </div>
-    </div>
 		<!-- product-area-start -->
 		<div class="product-area pt-95 xs-mb">
 			<div class="container">

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/main.css"/>
+    <!-- <link rel="stylesheet" href="/src/main/resources/public/stylesheets/main.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <title>Search</title>
+</head>
+<body>
+    <header class="index-nav">
+        <li><a style="font-weight: bolder; color:#1565F1" th:href="@{/}">Home</a></li>
+        
+    </header>
+    <p>Search Result: </p>
+    <p th:text="${inputName}"></p>
+
+     <table class="db-table" style="width:auto; text-align: center;">
+       
+        <tr>
+          <td><p style="color: #93AA6F;" th:text="${inputTitle}"></p></td>
+          <td><p style="color: #93AA6F;" th:text="${inputAuthor}"></p></td>
+          <td><p style="color: #93AA6F;" th:text="${inputPrice}"></p></td>
+          
+        </tr>
+      </table>
+       <tr>
+       Product ID:
+      <td><p style="color: #EED8E4;" th:text="${inputPid}"></p></td>
+      </tr>
+       <tr style="font-weight: bolder; color:#F11515">
+         
+        <button type="submit" class="btn btn-buy" style="background-color: #93AA6F;width:10%;border-color: #93AA6F;">BUY</button>
+      
+       </tr>
+    
+    
+
+</body>
+</html>
