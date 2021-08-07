@@ -70,10 +70,29 @@ public class Main {
   }
 
   @RequestMapping("/home")
-  String home(HttpServletRequest request)  {
+  String home(Map<String, Object> model, HttpServletRequest request)  {
     HttpSession session = request.getSession(false);
     if(session != null) { // If logged in may continue
-      return "home";
+        try (Connection connection = dataSource.getConnection()) {
+          Statement stmt = connection.createStatement();
+          ResultSet rs = stmt.executeQuery("SELECT * FROM products");
+  
+          ArrayList<Product> Products = new ArrayList<Product>();
+        
+  
+          while (rs.next()) {
+            Product prod = new Product();
+            prod.setTitle(rs.getString("title"));
+            prod.setProductID(rs.getString("productId"));
+            Products.add(prod);
+          }
+          model.put("Products", Products);
+          return "home";
+        }
+        catch (Exception e) {
+          model.put("message", e.getMessage());
+          return "error";
+        }
     }
     else {
       return "invalid";
