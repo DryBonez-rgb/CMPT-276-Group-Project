@@ -416,7 +416,7 @@ String getProduct(Map<String, Object> model, @PathVariable String pid) {
     Statement stmt = connection.createStatement();
     ResultSet rs = stmt.executeQuery("SELECT * FROM products WHERE productId=" + Integer.parseInt(pid));
   
-    Product productDisplayed = new Product(rs.getString("title"), rs.getString("author"), rs.getString("price"), rs.getString("sellerID"), rs.getString("image"));
+    Product productDisplayed = new Product(rs.getString("title"), rs.getString("author"), rs.getString("price"), rs.getString("sellerID"), rs.getString("image"), rs.getString("productId"));
 
     model.put("output", productDisplayed);
     return "productdisplay";

@@ -25,12 +25,13 @@ public class Product
     public Product() {} // empty constructor
 
 
-    public Product(String title, String author, String price, String sellerID, String image) {
+    public Product(String title, String author, String price, String sellerID, String image, String productID) {
         this.title = title;
         this.author = author;
         this.price = price;
         this.sellerID = sellerID;
         this.image = image;
+        this.productID = productID;
     }
     
     public String getTitle()

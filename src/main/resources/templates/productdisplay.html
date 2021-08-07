@@ -84,7 +84,7 @@
 
         <a href="/"><img src="/ReadME-logo-alt.png" class="logo_medium"></a>
 
-        <h2><strong>Lorem ipsum dolor sit amet</strong></h2>
+        <h2><strong>Product Details</strong></h2>
         <div class="row">
             <div class="col-md-6">
                 <img th:src="@{${src/main/resources/public/database_img + output.image + '.png'}}" class="img-thumbnail" alt="...">
@@ -100,22 +100,24 @@
                     <tbody>
                         <tr>
                             <th scope="row">Product Name</th>
-                            <td>Lorem ipsum</td> <!-- Fetch product name from database -->
+                            <td th:text="${output.getTitle()}"></td> <!-- Fetch product name from database -->
                         </tr>
                         <tr>
                             <th scope="row">Author</th>
-                            <td th:text="${output.author}"></td> <!-- Fetch author name from database -->
+                            <td th:text="${output.getAuthor()}"></td> <!-- Fetch author name from database -->
                         </tr>
                         <tr>
                             <th scope="row">Price</th>
-                            <td th:text="${output.price}"></td> <!-- Fetch price from database -->
+                            <td th:text="${output.getPrice()}"></td> <!-- Fetch price from database -->
                         </tr>
                         <tr>
                             <th scope="row">Seller</th>
-                            <td th:text="${output.sellerID}"></td> <!-- Fetch seller id from database -->
+                            <td th:text="${output.getSellerID()}"></td> <!-- Fetch seller id from database -->
                         </tr>
                     </tbody>
                 </table>
+                <br>
+                <p th:style="|font-weight: bold; font-size: larger;|"><a th:href="@{/order/{id}(id=${output.getProductID()})}">Click here to Order this Product.</a></p>
             </div>
         </div>
 
