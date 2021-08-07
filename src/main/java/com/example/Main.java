@@ -432,20 +432,21 @@ public String handleBrowserEbookSubmit(Map<String, Object> model, Product produc
 // PRODUCT DISPLAY
 //================================
 @RequestMapping("/productdisplay/{pid}")
-String getProduct(Map<String, Object> model, @PathVariable String pid) {
-  try (Connection connection = dataSource.getConnection()) {
-    Statement stmt = connection.createStatement();
-    ResultSet rs = stmt.executeQuery("SELECT * FROM products WHERE productId=" + Integer.parseInt(pid));
-  
-    Product productDisplayed = new Product(rs.getString("title"), rs.getString("author"), rs.getString("price"), rs.getString("sellerID"), rs.getString("image"), rs.getString("productId"));
+  public String getProduct(Map<String, Object> model, @PathVariable String pid) {
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM products WHERE productId="+(Integer.parseInt(pid)));
+      rs.next();
+      Product productDisplayed = new Product(rs.getString("title"), rs.getString("author"), rs.getString("price"), rs.getString("sellerID"), rs.getString("image"), rs.getString("productId"));
 
-    model.put("output", productDisplayed);
-    return "productdisplay";
-  } catch (Exception e) {
-    model.put("message", e.getMessage());
-    return "error";
+      System.out.println(productDisplayed.getTitle() + " " + productDisplayed.getAuthor());
+      model.put("output", productDisplayed);
+      return "productdisplay";
+    } catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
   }
-}
 
 //================================
 // AUTHOR DISPLAY
