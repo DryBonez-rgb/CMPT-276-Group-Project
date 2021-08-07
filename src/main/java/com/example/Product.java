@@ -24,8 +24,11 @@ public class Product
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
+>>>>>>> parent of 05dc63d (iter 3)
+=======
 >>>>>>> parent of 05dc63d (iter 3)
 =======
 >>>>>>> parent of 05dc63d (iter 3)
