@@ -7,17 +7,6 @@ public class Order {
     private String sellerID;
     private String buyerID;
     private String cost;
-<<<<<<< HEAD
-=======
-
-    public Order() {}
-
-    public Order(String productID, String buyerID, String cost) {
-        this.productID = productID;
-        this.buyerID = buyerID;
-        this.cost = cost;
-    }
->>>>>>> js
 
     public String getID()
     {
@@ -68,8 +57,4 @@ public class Order {
     {
         this.cost = c;
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> js

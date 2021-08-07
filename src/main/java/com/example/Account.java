@@ -8,12 +8,6 @@ public class Account
     private String type;
     private boolean premium;
 
-    public Account() {}
-
-    public Account(String name) {
-        this.name = name;
-    }
-
     public String getName()
     {
         return this.name;
