@@ -268,6 +268,7 @@ public class Main {
 //================================
   
 <<<<<<< HEAD
+<<<<<<< HEAD
 @GetMapping(path = "/order/{pid}")
 public String orderProduct(Map<String, Object> model, @PathVariable String pid, HttpServletRequest request){
   HttpSession session = request.getSession(false);
@@ -303,6 +304,8 @@ public String orderProduct(Map<String, Object> model, @PathVariable String pid, 
     }
   }
 =======
+=======
+>>>>>>> parent of 05dc63d (iter 3)
 @GetMapping(
   path = "/order"
 )
@@ -310,6 +313,9 @@ public String get(Map<String, Object> model) {
   Order order = new Order();
   model.put("order", order);
   return "ordersuccess";
+<<<<<<< HEAD
+>>>>>>> parent of 05dc63d (iter 3)
+=======
 >>>>>>> parent of 05dc63d (iter 3)
 }
 
@@ -374,6 +380,7 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
   }
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 
   @RequestMapping("/db")
@@ -699,6 +706,8 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
       }
     }
   }
+=======
+>>>>>>> parent of 05dc63d (iter 3)
 =======
 >>>>>>> parent of 05dc63d (iter 3)
 

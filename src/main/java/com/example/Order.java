@@ -7,7 +7,10 @@ public class Order {
     private String sellerID;
     private String buyerID;
 <<<<<<< HEAD
+<<<<<<< HEAD
     private String cost;
+=======
+>>>>>>> parent of 05dc63d (iter 3)
 =======
 >>>>>>> parent of 05dc63d (iter 3)
 
@@ -51,11 +54,14 @@ public class Order {
         this.buyerID = b;
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     public void setCost(String c)
     {
         this.cost = c;
     }
+=======
+>>>>>>> parent of 05dc63d (iter 3)
 =======
 >>>>>>> parent of 05dc63d (iter 3)
 }
