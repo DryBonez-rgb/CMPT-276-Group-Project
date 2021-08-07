@@ -810,7 +810,6 @@ String getAuthor(Map<String, Object> model, @PathVariable String aid) {
   }
 
 
-  //Search
   @RequestMapping( 
     path = "/search"
   )
@@ -825,13 +824,14 @@ String getAuthor(Map<String, Object> model, @PathVariable String aid) {
       
       rs.getString("author");
       rs.getString("price");
+      rs.getString("productid");
     }
     output.setTitle(rs.getString("title"));
  
     model.put("inputTitle", title);
     model.put("inputAuthor", rs.getString("author"));
-    model.put("price", rs.getInt("price"));
-    model.put("inputObj", output);
+    model.put("inputPrice", rs.getString("price"));
+    model.put("inputPid", rs.getString("productid"));
 
     return "search";
     } catch (Exception e) {
@@ -839,6 +839,7 @@ String getAuthor(Map<String, Object> model, @PathVariable String aid) {
       return "miss";
     }
   }
+
   
 
 

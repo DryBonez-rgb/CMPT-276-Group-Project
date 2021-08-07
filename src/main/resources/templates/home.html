@@ -35,9 +35,7 @@
 
 		<!-- header-area-start -->
         <header>
-            <ul th:each="product : ${Products}">
-                <p><a th:href="@{/productdisplay/{id}(id=${product.getProductID()})}"><span th:text="${product.getTitle()}"></a></p> <!-- Evan's Product Display code-->
-            </ul>
+            
 			<!-- header-top-area-start -->
 			<div class="header-top-area">
 				<div class="container">
@@ -172,6 +170,11 @@
 			</div>
 		</div>
 		<!-- slider-area-end -->
+        <div>
+        <ul th:each="product : ${Products}">
+                <p><a th:href="@{/productdisplay/{id}(id=${product.getProductID()})}"><span th:text="${product.getTitle()}"></a></p> <!-- Evan's Product Display code-->
+        </ul>
+        </div>
 		<!-- product-area-start -->
 		<div class="product-area pt-95 xs-mb">
 			<div class="container">
