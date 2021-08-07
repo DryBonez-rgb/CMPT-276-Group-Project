@@ -11,13 +11,28 @@
     </head>
     <body>
         <div class="container">
-            <div class="book-detail">
-                <span th:text="${Product.getTitle()}"/>
-                <span th:text="${Product.getAuthor()}"/>
-            </div>
             <a href="/"><img src="/ReadME-logo-alt.png" class="logo_medium"></a>
+            <div class="space" style="height: 50px;width: max-content;"></div>
+            <h4>Thank you for choosing ReadME</h4>
+            <h6>Please review your order below:</h6>
+            <hr class="divide">
+            <div class="book-detail">
+                <h5><b><span th:text="${Product.getTitle()}"/></b></h5>
+                <p><span th:text="${Product.getAuthor()}"/></p>
+                <small>$<span th:text="${Product.getPrice()}"></small><br><br>
+                <!-- <hr class="divide"> -->
+                <b>Shipping from:</b>
+                <p><span id="ori-book-addr-01" th:text="${Product.getAddress01()}"/><br><span id="ori-book-city" th:text="${Product.getCity()}"/>, <span id="ori-book-province" th:text="${Product.getProvince()}"/>, <span id="ori-book-postal" th:text="${Product.getPostal()}"/></p>
+            </div>
+            <hr class="divide">
+
             <form class="row g-3 needs-validation"  action="#" method="post" th:action="@{/order}" th:object="${order}" autocomplete="off">
               
+                <!-- <input th:text="${Product.getTitle()}"/> -->
+                <input th:field="*{sellerID}" id="sellerID" value="1" disabled hidden/>
+                <input th:field="*{productID}" id="productID" value="1" disabled hidden/>
+                <input th:field="*{cost}" id="cost" value="198.29" disabled hidden/>
+
                 <h2>Where is this book shipping to?</h2>
                 <div class="alert alert-success" role="alert">
                     <h4>Before you start</h4>
@@ -98,19 +113,27 @@
                 <script src="https://maps.googleapis.com/maps/api/js?language=en&key=AIzaSyCMP6_yRqbqV11t3gAHwWidvWSWwqc9kyE&callback=initAutocomplete&libraries=places&v=weekly" async>
                 </script>
             
-                <div class="blank"></div>
                 <div class="form-group form-input">
                     <button class="btn btn-success right-align" type="button" id="verify">Get shipping rate</button>
                 </div>
-                <h2 id="displayDistance" style="display: none;">
-                    Your total distance is: <span id="distance"></span><br>
-                    Your shipping cost is: $<span id="rate"></span>
+                <div class="blank"></div>
 
-                </h2>
+                <div id="displayDistance" class="card border-light mb-3" style="width: 50%; display:none;">
+                    <div class="card-header" style="margin: -10px, 0;">Overview</div>
+                    <div class="card-body text-dark">
+                        <p class="card-text">Your distance is: <span id="distance"></span></p>
+                        <p class="card-text">Your shipping cost is: $<span id="rate"></span></p>
+                        <p class="card-text">Your total comes to: <b>$<span id="totalPrice"></span></p></b>
+                    </div>
+                    <div class="blank"></div>
+                    <div class="form-group form-input">
+                        <button class="btn btn-success right-align" type="submit" id="submit" style="width: 100%;">Place Order</button>
+                    </div>
+                </div>
             </form>
           </div>
         <script>
-            const origin_address = "4770+main+street+vancouver";
+            let origin_address;
             const API_key = "AIzaSyCb0f_PbINMu_bV5Bo096XnmA4Gf-VKKtQ";
             let destination_address;
             
@@ -140,7 +163,9 @@
 
             //  changes the address stored in the global variable destination_address
             function updateAddress(){
+                origin_address = "[[${Product.getAddress01()}]]"+ "+" +"[[${Product.getCity()}]]"+"+"+"[[${Product.getProvince()}]]"+"+"+"[[${Product.getPostal()}]]";
                 destination_address = document.getElementById("book-addr-01").value+document.getElementById("book-city").value+"+"+document.getElementById("book-province").value+"+"+document.getElementById("book-postal").value;
+                console.log(origin_address);
                 console.log(destination_address);
             }
 
@@ -208,7 +233,15 @@
                 document.getElementById("distance").innerHTML = distance;
                 const shippingCost = shippingRate(distance);
                 document.getElementById("rate").innerHTML = shippingCost;
+                const bookPrice = "[[${Product.getPrice()}]]";
+                console.log(bookPrice)
+                console.log(bookPrice.parseFloat);
+                var totalPrice = (+bookPrice)+(+shippingCost);
+                document.getElementById("totalPrice").innerHTML = totalPrice;
+                document.getElementById("cost").innerHTML = totalPrice;
+
             }
+
             
             
             document.getElementById("verify").addEventListener("click", displayDistance);

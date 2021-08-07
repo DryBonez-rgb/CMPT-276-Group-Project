@@ -291,9 +291,11 @@ public String orderProduct(Map<String, Object> model, @PathVariable String pid, 
         rs.next();
         System.out.println(pid);
         Product prod = new Product();
+        prod.setSellerID(rs.getString("sellerId"));
         prod.setProductID(rs.getString("productId"));
         prod.setPrice(rs.getString("price"));
         prod.setTitle(rs.getString("title"));
+        prod.setAuthor(rs.getString("author"));
         prod.setAddress01(rs.getString("address01"));
         prod.setAddress02(rs.getString("address02"));
         prod.setCity(rs.getString("city"));
