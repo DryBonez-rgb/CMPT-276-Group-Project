@@ -11,6 +11,10 @@
     </head>
     <body>
         <div class="container">
+            <div class="book-detail">
+                <span th:text="${order.getTitle()}"></span>
+                <span th:text="${order.getAuthor()}"></span>
+            </div>
             <a href="/"><img src="/ReadME-logo-alt.png" class="logo_medium"></a>
             <form class="row g-3 needs-validation"  action="#" method="post" th:action="@{/upload}" th:object="${product}" autocomplete="off">
               

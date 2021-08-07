@@ -6,16 +6,7 @@ public class Order {
     private String productID;
     private String sellerID;
     private String buyerID;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     private String cost;
-=======
->>>>>>> parent of 05dc63d (iter 3)
-=======
->>>>>>> parent of 05dc63d (iter 3)
-=======
->>>>>>> parent of 05dc63d (iter 3)
 
     public String getID()
     {
@@ -37,6 +28,11 @@ public class Order {
         return this.buyerID;
     }
 
+    public String getCost()
+    {
+        return this.cost;
+    }
+
     public void setID(String i)
     {
         this.ID = i;
@@ -47,27 +43,18 @@ public class Order {
         this.productID = p;
     }
 
-    public void sellerID(String s)
+    public void setSellerID(String s)
     {
         this.sellerID = s;
     }
 
-    public void buyerID(String b)
+    public void setBuyerID(String b)
     {
         this.buyerID = b;
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
     public void setCost(String c)
     {
         this.cost = c;
     }
-=======
->>>>>>> parent of 05dc63d (iter 3)
-=======
->>>>>>> parent of 05dc63d (iter 3)
-=======
->>>>>>> parent of 05dc63d (iter 3)
 }
