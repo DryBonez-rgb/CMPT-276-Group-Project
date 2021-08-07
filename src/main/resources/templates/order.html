@@ -12,11 +12,11 @@
     <body>
         <div class="container">
             <div class="book-detail">
-                <span th:text="${order.getTitle()}"></span>
-                <span th:text="${order.getAuthor()}"></span>
+                <span th:text="${Product.getTitle()}"/>
+                <span th:text="${Product.getAuthor()}"/>
             </div>
             <a href="/"><img src="/ReadME-logo-alt.png" class="logo_medium"></a>
-            <form class="row g-3 needs-validation"  action="#" method="post" th:action="@{/upload}" th:object="${product}" autocomplete="off">
+            <form class="row g-3 needs-validation"  action="#" method="post" th:action="@{/order}" th:object="${order}" autocomplete="off">
               
                 <h2>Where is this book shipping to?</h2>
                 <div class="alert alert-success" role="alert">
