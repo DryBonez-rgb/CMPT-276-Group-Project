@@ -346,7 +346,7 @@ public String handleBrowserProductSubmit(Map<String, Object> model, Product prod
     Statement stmt = connection.createStatement();
     HttpSession session = request.getSession();
     stmt.executeUpdate("CREATE TABLE IF NOT EXISTS products (productId serial, sellerId varchar(20), title varchar(80), isbn varchar(20), image varchar(200), status bool, price varchar(10), author varchar(80), subject varchar(40), description varchar(1000), address01 varchar(200), address02 varchar(100), city varchar(20), province varchar(40), postal varchar(10))");
-    String sql = "INSERT INTO products (sellerId, title, isbn, image, status, price, author, subject, description, address01, city, province, postal) VALUES ('" + session.getAttribute("ID") + "','" + product.getTitle() + "','" + product.getImage() + "','" + product.getIsbn() + "','" + "TRUE" + "','"+ product.getPrice()+ "','" + product.getAuthor() + "','"+ product.getSubject() +"','"+ product.getDescription() + "','" + product.getAddress01()+ "','" + product.getCity()+ "','" + product.getProvince()+ "','" + product.getPostal()+"')";
+    String sql = "INSERT INTO products (sellerId, title, isbn, image, status, price, author, subject, description, address01, city, province, postal) VALUES ('" + session.getAttribute("ID") + "','" + product.getImage() + "','" + product.getTitle() +  "','" + product.getIsbn() + "','" + "TRUE" + "','"+ product.getPrice()+ "','" + product.getAuthor() + "','"+ product.getSubject() +"','"+ product.getDescription() + "','" + product.getAddress01()+ "','" + product.getCity()+ "','" + product.getProvince()+ "','" + product.getPostal()+"')";
     stmt.executeUpdate(sql);
     // System.out.println(account.getName() + " " + account.getPassword());
     return "redirect:/success";
