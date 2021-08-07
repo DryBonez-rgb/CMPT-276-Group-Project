@@ -795,10 +795,11 @@ String getAuthor(Map<String, Object> model, @PathVariable String aid) {
   @RequestMapping( 
     path = "/search"
   )
-  public String getSearchResult(Map<String, Object> model, @RequestParam String title ) {
+  public String getRectangleName(Map<String, Object> model, @RequestParam String title ) {
     try (Connection connection = dataSource.getConnection()) {
     Statement stmt = connection.createStatement();
     ResultSet rs = stmt.executeQuery("SELECT * FROM products " + "WHERE (title ='"+title+"')");
+    
     Product output = new Product();
 
     while (!rs.next()) {
@@ -816,7 +817,7 @@ String getAuthor(Map<String, Object> model, @PathVariable String aid) {
     return "search";
     } catch (Exception e) {
       model.put("message", e.getMessage());
-      return "error";
+      return "miss";
     }
   }
   
